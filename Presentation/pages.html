@@ -5216,10 +5216,10 @@ the launch strategy.
 The standard defines two values:
 
 * `std::launch::async`  
-  if **not set** the callable will **not** run on its own thread;._[]
+  if set it **enforces** the callable will run on its own thread;._[]
 
 * `std::launch::deferred`
-  of **set** the callable will **not** be called before `get` is invoked.
+  if set the callable will **not** run until `get` is invoked.
 
 .I[
 For more information on launch policies see:
@@ -5227,10 +5227,11 @@ http://en.cppreference.com/w/cpp/thread/launch
 ]
 
 .F[:
-One case in which this setting this flag may make sense is to test the program
-logic independent from possible problems created through race conditions or
-deadlocks, originating from dependencies between the "independent tasks", that
-had been overlooked.
+Generally, without specifying a launch policy, the runtime system decides when
+some callable started with `std::async` will effectively run – it may or may
+not be immediately. **A deferred thread start may cause deadlocks if the thread
+is part of a group of threads that need to synchronize with each other** (e.g.
+via [Condition Variables](#condition_variables)).
 ]
 
 ---
@@ -5294,8 +5295,8 @@ common goal is outlined in the following example.._[]
 .pull-left[
 The workers could look about so …
 ```
-void foo ( … , bool &die) {
-    …
+void foo(std::atomic_bool& die,
+          … ) { // more args
     for ( … ) {
         if (die) return;
         …
@@ -5314,12 +5315,12 @@ void foo ( … , bool &die) {
 .pull-right[
 … being run by that code:
 ```
-bool die = false;
+std::atomic_bool die{false};
 auto task1 = std::async(
-    [&die]{ foo( … , die); }
+    [&die, … ]{ foo(die, … ); }
 );
 auto task2 = std::async(
-    [&die]{ foo( … , die); }
+    [&die, … ]{ foo(die, … ); }
 );
 …
 … task1.get() …
