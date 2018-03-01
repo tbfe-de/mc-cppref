@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------------
+# List All Infographics Used in this Training
+# -----------------------------------------------------------------------------
+# Note:
+# - Empty lines are ignored
+# - Comment as usual (start with # after first non-whitespace)
+# - Sections separated by colon-lines (currently no special meaning)
+# - Order matters for generating combined PDF
+
+
+:::::::::::::::::::::::::::: Regular
+ExecutionModel
+ClassToMemoryMapping
+RuntimeTypeIdentification
+ExceptionBasics
+SmartPointers
+TemplateBasics
+ParametrizedTypesAndSizes
+StringBasics
+IOStreamBasics
+STL-IteratorUsages
+STL-SequenceContainers
+STL-AssociativeContainers
+RegularExpressions
+
+:::::::::::::::::::::::::::: Optional
+GuidingPrinciples
+UML-ClassesAndRelations
+Example-ClassDesign
+TypeBasedBranching
+Example-OpenClosePrinciple
+MultipleInheritance
+DiamondShapedInheritance
+STL-IteratorCategories
+STL-IteratorDetails
+ResourceManagement
+ExceptionDetails
+ReducingCodeBloat
+

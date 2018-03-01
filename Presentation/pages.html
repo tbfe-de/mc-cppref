@@ -1,0 +1,6407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>C++ Introduction</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- when changing the stylesheet file please see also remark below -->
+    <link rel="stylesheet" type="text/css" href="CSS/styling.css" />
+  </head>
+  <body>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- :::::::::: template pages come first ... skip to REALCONTENT ::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<textarea id="source">
+
+layout: true
+name: blank
+styling: styling.css
+styling-by: Martin Weitzel
+
+<!--
+  *****************************************************************************
+  Template used for title page (only)
+  *****************************************************************************
+  Please change the 'styling-by:' attribute if you change the style-sheet.
+-->
+
+.stylehint[
+Styled with [{{styling}}]({{styling}}) by {{styling-by}}
+]
+
+---
+layout: true
+name: plain
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](http://tbfe.de)
+customer:  [for MicroConsult Training & Consulting GmbH](http://microconsult.de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages NOT referring to any Info-Graphic
+  *****************************************************************************
+  The following attributes are mandatory FOR THE TEMPLATE PAGE and should
+  simply be left empty if not meaningful.
+
+  copyright: will be reproduced in each page footer first
+  branding: will reproduced in each page footer next
+  customer: will be reproduced in each page footer last
+
+  As the above attributes are part of several page templates a global replace
+  should be used for consistent changes.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+{{header}}
+
+.pagefooter[
+{{copyright}}: {{branding}} {{customer}} .microconsult-logo[]
+]
+
+---
+layout: true
+name: linkinfo
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](http://tbfe.de)
+customer:  [for MicroConsult Training & Consulting GmbH](http://microconsult.de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages INTRODUCING to a new Info-Graphic
+  *****************************************************************************
+  On this kind of pages a size-reduced version of the whole info graphic will
+  be reproduced and occupies approximately 2/3 of the page width. So only add
+  little information, preferably links to later pages dealing with single
+  sections of the info graphic.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the infographic EXCLUDING the suffix.
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+{{header}}
+
+.infographic[
+[![Info-Grafik](InfoGraphics/{{graphic}}.png)](InfoGraphics/{{graphic}}.png
+                "Click to open – add [CTRL+] SHIFT for new [tabbed] window")
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} {{customer}} .microconsult-logo[]
+]
+
+---
+layout: true
+name: withinfo
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](http://tbfe.de)
+customer:  [for MicroConsult Training & Consulting GmbH](http://microconsult.de)
+
+<!--
+  *****************************************************************************
+  Template used for pages dealing with a SPECIFIC SECTION of an Info-Graphic
+  *****************************************************************************
+  On such pages a link to the info graphic is reproduced in the top-right
+  corner (or maybe elsewhere depending on the style sheet), so there are no
+  restrictions with respect to the space available for the content of the page.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the info graphic EXCLUDING the suffix and
+  section: specific section in the info graphic this page refers to
+  header: ## and header text (i.e. including the markdown formatting indicator)
+-->
+
+{{header}}
+
+.infolink.right[
+[Click here for Info-Graphic  
+{{graphic}}](InfoGraphics/{{graphic}}.png "add [CTRL+] SHIFT for own [tabbed] window")  
+{{section}}
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} {{customer}} .microconsult-logo[]
+]
+
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- end of templates ... below comes the REALCONTENT - TNETNOCLAER ends it -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+---
+template: blank
+name: frontmatter
+
+.title[
+	C++ Refresh
+]
+
+.subtitle[
+	An Refresher's Overview on C++ Based on
+	ISO/ANSI-Standards C++98, C++03 und C++11
+]
+.author.pull-left[
+	Durchführung:  
+	Dipl.-Ing. Martin Weitzel  
+	Technische Beratung für EDV  
+	http://tbfe.de  
+]
+.client.pull-right[
+	Im Auftrag von:  
+	MicroConsult  
+	Training & Consulting GmbH  
+	http://www.microconsult.com
+]
+
+---
+template: plain
+class: agenda
+name: agenda
+header: ## Agenda
+
+This agenda and the following pages show a proposed path through the topics
+selected for the next two days.
+
+-------------------------------------------------------------------------------
+
+* [The C/C++ Preprocessor			](#c_cpp_preprocessor)
+* [C++-Basics – General Extensions to C		](#cpp_extensions)
+* [Object-Oriented Programming			](#oop_intro)
+* [Introduction to Exceptions			](#exception_intro)
+* [Dynamic Memory Allocation 			](#dynamic_memory)
+* [Introduction to Templates			](#template_intro)
+* [Library Overview (Strings, IOstreams, STL …)	](#library_overview)
+* [Optional: C++11 Generalized Callables	](#generalized_callables)
+* [Optional: C++11 Concurrency Basics		](#concurrency_basics)
+* [Optional: Library Extensions since C++11	](#cpp11_library_extensions)
+* [Appendices and Info-Graphics			](#appendices)
+
+-------------------------------------------------------------------------------
+
+Variations can be in the beginning, e.g. which of the optional parts are of
+most interest and should be given priority – if time allows their coverage.
+
+
+---
+template: plain
+name: interrupt_me
+header: ### Interrupts Enabled
+
+Some parts of this training are meant to be given really
+
+.center.large[*"Hands On"*]
+
+i.e. your hands on the keyboard, while following the explanations … feel free
+to ask questions anytime and push coverage of C++ features – including the live
+examples – into the direction that most satisfy your needs.
+
+.N.center[
+Nothing is absolutely "fixed" here – this course is given by a human, not a
+book that keeps silent if you do not understand something.
+]
+
+???
+
+#### Proposed Explorations:
+
+* Write a "hello, world" program:
+
+  * In Visual Studio be sure to use "C++ Console Project".
+
+  * Chose "Hello World" for the start
+
+* Explain different ways to start it so that the final output is visible.
+
+  * In Visual Studio hint to "Start Without Debugging" (CTRL-F5).
+
+  * Or place instruction to wait for a key at end (`cin.ignore(1)`).
+
+* Put a second source file program in the same project.
+
+  * Show how to compile only one.
+
+  * Alternatively (especially for Eclipse Users) show how to clone a whole
+    project.
+
+---
+template: plain
+name: online_vs_offline
+header: ## Online vs. Offline Resources
+
+You may already have received this presentation printed on paper. This is
+because most people find it still easier to make annotations on paper.
+
+.N[
+If you only have an electronic version you may print it out yourself.
+]
+
+Note that any version of this document – printed or electronic and *including*
+all copies you make yourself – are distributed under a
+
+.center[**Creative Commons BY-SA License**]
+
+Basically this means you need to
+
+* keep the original author's name and organization in the page footer
+* license any derived work you publish in the same way.
+
+.I[
+For more details please see here:  
+https://creativecommons.org/licenses/by-sa/3.0/  
+Weitere Details finden Sie hier:  
+https://creativecommons.org/licenses/by-sa/3.0/de/
+]
+
+---
+template: plain
+name: online_vs_offline
+header: ### Online Version of this Presentation
+
+You may download an online version of the presentation from the internet:
+
+.N[
+TBD
+]
+
+If you have unpacked the files be sure the following is included:._[]
+
+* `Presentation/pages.html`
+* `Presentation/remark.min.js`
+* `Presentation/CSS/styling.css`
+
+This is the minimum necessary to view the presentations by opening
+`pages.html` in any recent browser, with JavaScript enabled.
+
+.F[:
+The whole presentation consists of more files, most importantly in the
+sub-directories `Infographics` and `PNG`. The former are large graphics on used
+for extended (but mostly optional) explanations. The latter supplies some Icons
+and Logos, serving rather cosmetic aspects.
+]
+
+---
+template: plain
+name: online_vs_offline
+header: ### External Online Resources
+
+There are many resources in the internet with in-depth coverage of most any
+C++ feature, at basic, intermediate, and advanced levels.
+
+.N[
+This document does not duplicate information readily available elsewhere but
+rather provides links to it.
+]
+
+If you view the presentation on a computer anyway it is suggested to prefer the
+HTML-version over the PDF-version, as you may
+
+* may navigate to related information by simply clicking the links, and
+
+* may also view the presenter's notes and even choose to use them for your own
+  annotations.
+
+The PDF-version has the (small) advantage that it is a single file that can be
+used "stand-alone".._[]
+
+.F[:
+The PDF version is most easily created from Google Chrome or some chrome-based
+browser with *Export to PDF* or *Print to PDF* or, if the final goal are
+print-outs anyway, by direct printing.
+]
+
+---
+template: plain
+name: online_compilation
+header: #### Online C++ References
+
+For any non-trivial technical product, at some point you need to look-up
+detailed information, as e.g. it is provided in reference manuals.
+
+.I[
+For C++ a good collections of reference material are here:  
+http://en.cppreference.com/w/  
+http://www.cplusplus.com
+]
+
+Both now on many of their pages have example sections with has code that can
+be
+
+* compiled as is, or
+* modified and compiled again.
+
+The former uses [Coliru] (= **Co**mpile, **li**nk, and **ru**n) the latter
+[C++ shell] as online compile service (see next page).
+
+[Coliru]: http://coliru.stacked-crooked.com
+[C++ shell]: http://cpp.sh
+
+.F[:
+Besides the coverage of the standard library cppreference.com also has sections
+on language features. As these take a rather formal and dry approach, they are
+– of course – precise but often use phrasing that is not easy to comprehend,
+and is also rich in details which are unimportant for an initial understanding.
+]
+
+---
+template: plain
+name: online_compilation
+header: #### Online C++ Compilers
+
+In recent years free *Online Compile Services* became available.._[]
+
+.N.center[
+These are basically internet sites with web front-ends to one or more
+programming languages (compiled or interpreted).
+]
+
+C++ Online Compilers are great tools and while details vary many allow
+
+* not only to try small programs (e.g. as "proof of concept")
+  * without installing a compiler and library
+  * let alone a whole development environment,
+
+<!-- -->
+
+* but also to compare the behaviour of several compiler versions or brands
+  easily, and
+
+<!-- -->
+
+* to save such code examples returning a *permalink* which you then may
+  send to others to discuss the code, be it
+  * privately with colleagues and friends, or
+  * in public on platforms like stack-overflow.
+
+.F[:
+While some have been switched of again
+[Coliru](http://coliru.stacked-crooked.com)
+– which the author of this uses a lot – has been there since many years and
+still is.
+[Wandbox](http://wandbox.org)
+is a more recent one with a little more embellished UI. With both you may
+choose between *g++* and *clang++* and both include a recent version of the
+[Boost Library](http://www.boost.org).
+]
+
+???
+
+##### Proposed Explorations:
+
+* Show some online compilers like:
+
+  * Use Coliru to compile a "hello, world" example.
+
+* Also try other online compilers, like
+
+    * http://wandbox.org
+
+* What its the purpose of this special online compiler?
+
+  * http://gcc.godbolt.org/
+
+---
+template: plain
+name: c_cpp_preprocessor
+header: ## The C/C++ Preprocessor
+
+The C preprocessor was introduced long ago to automate several kinds of
+systematic editing:._[]
+
+* write common parts of several files only once (`#include`)
+
+* conditionally compile portions of the source code (`#if`, `#ifdef`, …)
+
+* repeatedly insert (nearly) identical code sequences to avoid function call
+  overhead for tiny subroutines (`#define`)
+
+In C++ many "classic" use cases of the preprocessor were superseded by builtin
+language features, though at times it still comes in handy.
+
+.N.center[
+But also keep in mind:  
+The C Preprocessor doesn't know about C.  
+🙂
+]
+
+.F[:
+Also, in the early years of C, on the PDP-11, separating some features from the
+compiler proper was necessary as the executable program file was limited to
+64+64 kB (Code+Data).
+]
+
+---
+template: plain
+name: preprocessor_uses
+header: ### Preprocessor Use Cases
+
+The set of still valid use cases is small, but not empty:
+
+.pull-left[
+
+* Centralising common code via [Header Files](#header_files).
+
+* Using [Include Guards](#include_guards) to avoid header files being processed
+  more than once.
+
+* [Special Usage Macros](#special_usage_macros)
+
+]
+.pull-right[
+]
+.pull-right[
+An example where a macro is indispensable is this, where `assert` first
+evaluates its argument as C++ expression …
+```
+void f(const char *cp) {
+	assert(cp != nullptr);
+	…
+}
+```
+]
+
+… but also requires it as character string for output, if the assertion
+fails.
+
+* The key mechanism here is only provided for macro arguments (as part of macro
+  replacement text) and called *Stringizing*, requested with `#` in front of a
+  macro argument name.
+
+* Similarly, `##` is the so-called *Token Pasting* operator._[], exclusively
+  available in macro replacement text too.
+
+.F[:
+A use case for token pasting is provided in the exploration section for
+[Configurable Exceptions](#configurable_exceptions).
+]
+
+---
+template: plain
+name: header_files
+header: #### Header Files
+
+Header files can be supplied by the system or be specific for a project:
+
+* System header files are looked-up in a set of predefined locations.._[]
+
+* Project specific header files are *first* looked up in locations associated
+  with the project, *then* in the locations of the system header files.
+
+Only regular slashes as path separators in include file names are portable
+(assuming the directory structure is matched), **backslashes are not**.
+
+.pull-left[
+Example for system header files:
+```
+#include <cassert>
+#include <iostream>
+#include <string>
+…
+```
+]
+.pull-right[
+Example for project specific header files:
+```
+#include "mylib/utilities.h"
+#include "point.h"
+…
+```
+]
+
+.F[:
+C++ implementations have the freedom instead of reading a file that exists in
+the file system to enable a predefined set of features within the compiler.
+Furthermore in C++ any system header **may** include other system headers.
+This may cause (mild) portability issues when switching compilers or even a
+complete development environment.
+]
+
+
+---
+template: plain
+name: include_guards
+header: #### Include-Guards
+
+Since the early times C, due to the
+
+.N.center[
+ODR – One Definition Rule
+]
+
+it is a well-known "best practice to
+
+* wrap all the actual content of a header file in a big conditional
+  compilation,
+
+* so that duplicating an `#include` for it does no harm.._[]
+
+```
+#ifndef MY_HEADER  // <--- begin of header file content
+#define MY_HEADER
+     // ^^^^^^^^^-- anything valid as unique macro name
+     // …
+     // … actual header content
+     // …
+#endif // <--------------- end of header file content
+```
+
+.F[:
+It is common practice to include one header from another header if the second
+depends on the first, though be aware of the potential problems caused by
+cycles in the dependency graph.
+]
+
+---
+template: plain
+name: 
+header: #### Special Usage Macros
+
+The following macro is often useful for creating output._[] in tiny programs
+used for testing and demonstrations,
+
+* not only **showing the value of some expression**,
+* but also that very expression as text, after
+* the name of the compiled file, and
+* the line number from where the macro was called.
+
+```
+#define PX(expr)\
+    (void)(std::cout << __FILE__ << '[' << __LINE__ << ']'\
+                     << "\t" #expr " --> " << (expr) << std::endl)
+```
+
+.F[:
+Same as useful is a macro written for the purpose of showing a type:
+
+```
+  #define PT(...)\
+    (void)(std::cout << __FILE__ << '[' << __LINE__ << ']'\
+                     << "\t" #__VA_ARGS__ " --> "\
+                     << boost::typeindex::type_id_with_cvr<__VA_ARGS__>()\
+                     << std::endl)
+```
+]
+
+---
+template: plain
+name: cpp_extensions
+header: ## How C++ Extends C
+
+* [Arithmetic Types	](#arithmetic_types)
+* [Const-Qualifier	](#const_qualifier)
+* [Pointers and Arrays	](#pointers_and_arrays)
+* [References		](#references)
+* [Default Arguments	](#default_args)
+* [Function Overloading	](#function_ovld)
+* [Operator Overloading	](#operator_ovld)
+
+It should be understood that "under the hood", C and C++ are both mapped to the
+hardware in the same, basic way.
+.N.center[
+So, from the low-level view, they use the same [Execution Model](#execution_model).
+]
+
+---
+template: plain
+name: arithmetic_types
+header: ### Arithmetic Types
+
+C++ has all the arithmetic types that C has, including a special type for
+binary logic (`bool` with value `true` and `false`).
+
+Conversions between arithmetic types take place automatically:._[]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+int i = -12;      // always OK
+unsigned u = i;   // OK (maybe compile time warning)
+short t{32768};   // new C++11 style initialization,
+                  // overflow error at compile time if
+                  // short is 16 bit two-s complement
+char c = t+122;   // OK (maybe compile time warning)
+if (c) …          // every value not 0 is taken as true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+C++11 allows to use `auto` as typename; the type of the variable will be the
+type of the initializing expression (without `const` and *reference*):
+
+```
+auto x = 3.1415;  // x will have type double
+auto y = 1.4142f; // y will have type float
+```
+
+.F[:
+There may be a warning if loss of information is possible. This is typically
+based on the types involved, not on some analysis of actual values (which may
+or may not be fully determinable at compile time).
+]
+
+???
+
+##### Proposed Explorations:
+
+* Compile the examples on this page without modifications, except the last one
+  (which is only a partial if-statement – it will be covered later).
+
+* After each variable *`v`* declared, in the same line add:  
+  `PX(`*`v`*`); PT(decltype(`*`v`*`);`
+
+* Place a `//`-comment in front of any line causing a compile error.
+
+* Does the output meet your expectations?
+
+* Change the line causing a compile error to classic (C/C++98) syntax.
+
+* Add the following line (note the curly braces!):
+  `if (auto a = i) { PX(a); PT(decltype(a)); }`
+
+* Explain the output.
+
+* Demonstrate `x` and `y` have the type claimed in the comments.
+
+* How could both changed to type `long float` while **keeping** their type
+  `auto`?
+
+ADVANCED:
+
+* Copy the last line (with the `if`-statement three times and replace the
+  the variable `i` with `u`, `t`, and `c`.
+
+* Again explain the output.
+
+* How far does the scope of `a` extend (obviously)?
+
+* Set an initial for `i` and `t` so that no output is generated from the
+  `if`-statements containing them.
+
+* Does this value always to be zero?
+
+* Find a value for `t` so that no output is generated from the `if`-statement
+  containing `c`.
+
+---
+template: plain
+name: uniform_initialization
+header: #### Brace Initialization
+
+C++11 also extended the initialization syntax
+
+* to allow
+
+  * initial values be written in a pair of curly braces anywhere._[] and
+  * (only in this case) omitting the equals sign between the variable name
+    and the opening brace.
+
+* provided a whole new (template) type `std::initializer_list<T>`
+
+* written as comma-separated list of identical or compatible types
+  * enclosed in a pair of curly braces.
+
+.W[
+While the original intent was to "simplify" the initialisation syntax, there
+were some unexpected stumbling-stones in combination with `auto`.
+]
+
+
+.F[:
+Traditionally C and C++ supported this syntax only for structures and native
+arrays.
+]
+
+???
+
+##### Proposed Explorations:
+
+* Rewrite the following initialisations using the braces:
+```
+int x = 42;
+double y = 0;
+bool b = false;
+struct point {
+    double x, y;
+};
+point zz = {0.0, 0.0};
+const point p1 = {3.5, 17};
+point p2 = p1;
+```
+
+* Explain the warnings (if any) and compile errors:
+```
+int x = 4.2;
+int y {4.2};
+float z = x/y;
+const char c = '€';
+```
+
+ADVANCED
+
+* Try to determine what values `v1` to `v8 will initially hold:
+```
+std::vector<int> v1 = { 2, 3, 5, 7, 11 };
+std::vector<int> v2{ 2, 3, 5, 7, 11 };
+std::vector<int> v3({ 2, 3, 5, 7, 11 });
+std::vector<int> v4({ 2, 3, 5, 7, 11 });
+const std::vector<int> v5 = { 2, 3, 5, 7, 11 };
+const std::vector<int> v6{ 2, 3, 5, 7, 11 };
+std::vector<int> v7(3);
+std::vector<int> v8{3};
+std::vector<int> v9{};
+```
+
+* Why does the following **not** define an empty vector?
+```
+std::vector<int> v0();
+```
+
+---
+template: plain
+header: #### Enforcing Conversions / Suppressing Warnings
+
+Conversions need sometimes to be enforced with cast operations:._[]
+```
+int x = 9;
+int y = 5;
+double d = static_cast<double>(x) / static_cast<double>(y);
+        // instead of C-style cast: (double)x / (double)y
+```
+Also, cast operations are sometimes used with the intent to suppress a warning:
+```
+short s = static_cast<short>(d);
+```
+.N[
+Which warning is issued under what circumstance and how it can be suppressed is
+always compiler specific.
+]
+
+.F[:
+C-style casts are still part of the C++ language but a deprecated language
+feature because they are hard to spot and the intention is not as much part of
+the syntax as with the C++-style cast, for which more examples will be shown
+later.
+]
+
+???
+
+##### Proposed Explorations:
+
+* Demonstrate different applications of `static_cast`.
+
+  * With GCC conversion warnings need first be enabled with `-Wconversion`.
+
+  * Then eliminate warning via explicit `static_cast`.
+
+  * With Visual Studio try to enable warnings with /Wall
+
+ADVANCED
+
+* Change the variable declaration of `d` to `auto` and systematically try the
+  following initialisations:
+
+  * `                         x  / y;`
+  * `                         x  / static_cast<float>(y);`
+  * `      static_cast<float>(x) / static_cast<float>(y);`
+  * `     static_cast<double>(x) / static_cast<float>(y);`
+  * `static_cast<long double>(x) / static_cast<float>(y);`
+  * `                         x  / static_cast<double>(y);`
+  * `      static_cast<float>(x) / static_cast<double>(y);`
+  * `     static_cast<double>(x) / static_cast<double>(y);`
+  * `static_cast<long double>(x) / static_cast<double>(y);`
+  * `                         x  / static_cast<long double>(y);`
+  * `      static_cast<float>(x) / static_cast<long double>(y);`
+  * `     static_cast<double>(x) / static_cast<long double>(y);`
+  * `static_cast<long double>(x) / static_cast<long double>(y);`
+
+* For each predict the type and (approximate or exact) value of `d`.
+
+---
+template: plain
+name: const_qualifier
+header: ### The `const` Qualifier
+
+A variable may optionally be qualified with `const`:._[]
+```
+const int x = 17;
+double const PI = 3.14;
+```
+The effect is that
+
+* there must be an initialisation and
+
+* subsequent attempts to modify the variable result in a compile time error.
+
+.N[
+As the examples show, the `const` qualifier may be written to the left or to
+the right of the type to which it applies.
+]
+
+.F[:
+The `const` qualifier was originally introduced with C++ but also became part
+of the C89 standard – hence today, 25 years later, it may well be reclaimed as
+a C++ addition but few people still know. Nevertheless it seems even today C++
+programs make more use of this feature than C programs.
+]
+
+???
+
+##### Proposed Explorations:
+
+* Demonstrate various effects of using `const`:
+
+  * Omitting initialisation.
+
+  * Attempt to modify.
+
+---
+template: plain
+name: arrays_and_pointers
+header: ### Arrays and Pointers
+
+Arrays and pointers are (sometimes) confused because for function arguments
+there are two different ways to express the same concept:
+
+.pull-left[
+```
+void foo(short arr[]) {
+    …
+}
+```
+]
+
+.pull-right[
+```
+void bar(short *p) {
+    …
+}
+```
+]
+
+Both are essentially equal as – behind the scenes – the functions will be
+called with the address of an `int` (arithmetic type).
+.N[
+The difference in information conveyed in the two cases is rather about intent:
+
+* `foo` will (presumably) be called with the address of the first element of an
+   array of `int`-s;
+* `bar` will be called with the address of a (presumably) single `int` or maybe
+   even a null pointer.
+]
+
+???
+
+##### Proposed Explorations:
+
+When called from a program like
+
+```
+int main() {
+    short arr[10];
+    short i;
+
+    foo(arr);
+    bar(&i);
+}
+```
+
+* Print pointer (address) of `arr` and `p` in both, `foo` and `bar`.
+
+  * Switch order of definition of `arr` and `i`.
+
+  * Switch calls (address of variable to first and pointer to second).
+
+  * Omit taking address (`&`) from variable
+
+  * Add taking address to array.
+
+ADVANCED
+
+* Apply `sizeof`:
+
+  * To the variables in the main program.
+
+  * To the arguments of `foo` and `bar`.
+
+---
+template: plain
+header: #### Indexing and Address Arithmetic
+
+When used to define some data item, arrays and pointers are different:
+
+.pull-left[
+For an array storage space is set aside to store the requested number of items
+of the given type:
+```
+double data[20];
+char message[1024];
+```
+Individual items are typically accessed by giving their index:
+```
+… data[12] …
+… message[i] …
+```
+Given a pointer points to an array cell …
+```
+dp = &data[0];
+cptr = &message[i];
+```
+]
+
+.pull-right[
+For a pointer only memory space to hold an address is set aside:
+```
+double *dp;
+char *cptr;
+```
+Assuming an appropriate initialisation items pointed to are accessed by
+dereferencing:
+```
+… *dp …
+… *cptr …
+```
+… also address arithmetic can make sense:
+```
+… ++dp …
+… *(cptr-3) …
+```
+]
+
+???
+
+##### Possible Explorations
+
+* Print addresses of arrays and content of pointer variables.
+
+  * Use various combinations of taking address and indexing.
+
+* Show the following is the same address:
+
+  * `data` and `&data[0] and `&data`
+
+  * `message` and `&message[0]` and `&message`
+
+ADVANCED
+
+* Show the different types of `data` and `&data`
+
+  * using `PT` and `decltype`
+  * **not** using `PT` and `decltype`
+
+---
+template: plain
+header: #### Equivalence of Indexing and Address Arithmetic
+
+There are two basic rules that make pointers and arrays equivalent when it
+comes to indexing and address arithmetic:
+
+* In almost any context._[] the pure name of an array decays to a pointer to
+  the first array element, i.e. `data` and `&data[0]` are equivalent.
+
+* All pointer arithmetic is scaled with the storage size of the underlying
+  type, making
+
+  * `ptr+i` equivalent to `&ptr[i]` and
+
+  * `*(ptr+i)` equivalent to `ptr[i]`.
+
+.N[
+In C++ the need to use C low-level data types like arrays and pointers strongly
+diminishes as the standard library offers more convenient abstractions like
+[Container Classes](#stl_containers) and [Smart Pointers](#smart_pointers).
+]
+
+.F[:
+Exceptions are when the name of an array is used with the `sizeof` of
+`&`-operator: then it will keep its array type, so `sizeof data` is the size
+the whole array occupies (in bytes) and `&data` is the address of the whole
+array, which is – of course – the same as the address of its first element but
+will use a different scaling for address arithmetic.
+]
+
+???
+
+##### Possible Explorations
+
+* Play with various combinations of indexing and taking address for array:
+
+  * (plain) `data`
+  * `data + 1`
+  * `&data[1]`
+  * `&data + 1`
+
+* Do similar for pointers:
+
+  * (plain) `ptr` (when initialized)
+  * `ptr + 1`
+  * `&ptr[1]`
+  * `&ptr + 1`
+
+---
+template: plain
+header: #### Arrays
+
+Arrays belong to the C++ subset of language features assumed from C:
+
+* the size must be fixed at compile time.
+* unless an initialisation is supplied:
+
+```
+double data[200];
+int primes_table[] = {
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29
+};
+```
+In addition to the array data there is often some extra information stored (in
+separate variables) up to which element an array is filled …
+```
+double *filled = &data[0]; // location of next free space
+*filled++ = …; // idiomatic style to fill array with values
+```
+or how many entries exist in an initialised array:
+```
+const auto N = sizeof primes_table / sizeof primes_table[0];
+```
+
+???
+
+##### Possible Explorations
+
+* What is the difficulty to write an output function that prints an aray of
+  integers of any size?
+
+* How can it be overcome?
+
+---
+template: plain
+header: #### Arrays (2)
+
+The size information needs eventually be presented to functions that process
+the content of same array, as the pure array name – when used as function
+argument – decays to a pointer to the first array element:._[]
+```
+void print_primes(int table[], std::size_t count) {
+    using namespace std;
+    for (int i = 0; i < count; ++i) cout << table[i] << endl;
+}
+…
+print_primes(primes_table, N);
+```
+Or:
+```
+double sum_data(double *from, double *to) {
+    double s = 0; while (from < to) s += *from++; return s;
+}
+…
+auto sum = sum_data(data, filled);
+```
+
+.F[:
+The C++ Standard Library provides the classes `std::array` and `std::vector`
+that may often be used as drop-in replacements for built-in arrays but bundle
+size information with the data.
+]
+
+???
+
+##### Possible Explorations (slightly advanced)
+
+Something along the lines of a program like this:
+
+```
+#include <iostream>
+
+int primes_table[] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 };
+const auto N = sizeof primes_table / sizeof primes_table[0];
+
+void show_array1() {
+    for (auto x  : primes_table)
+        std::cout << x << ' ';
+     std::cout << std::endl;
+}
+
+/*
+void show_array2(int primes[]) {
+    for (auto x  : primes)
+        std::cout << x << ' ';
+    std::cout << std::endl;
+}
+*/
+
+void show_array3(int primes[], int size) {
+    for (int i = 0; i < size; ++i)
+        std::cout << primes[i] << ' ';
+    std::cout << std::endl;
+}
+
+template<typename T>
+void show_array4(const T& primes) {
+    for (auto x  : primes)
+        std::cout << x << ' ';
+    std::cout << std::endl;
+}
+
+int main() {
+    show_array1();
+//  show_array2(primes_table);
+    show_array3(primes_table, N);
+    show_array4(primes_table);
+}
+
+```
+
+---
+template: plain
+header: #### `const` Arrays
+
+Arrays qualified with `const` must be initialised and cannot be modified:
+```
+const int primes_table[] = {
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29
+};
+```
+.N[
+Initialised write protected arrays are good for pre-calculated tables of data
+as it can be loaded into initialised storage from the program's executable
+image.
+]
+
+As `const` in C++ silently implies internal linkage, to share such data between
+translation units its declaration must also be qualified with `extern` in a
+header file included by all interested parties:
+```
+extern const int primes_table[];
+```
+The initialisation from above then goes into **exactly one** translation unit.
+
+.F[:
+The rule *`const` implies internal linkage* allows to put the definition and
+initialisation of `const` data into header files without multiple definitions
+of the same symbol leading to linker errors.
+]
+
+???
+
+##### Possible Explorations
+
+Example showing the effects of internal linkage for `const`.
+
+* Requires at the beginning use two translation units with explicit external
+  declaration.
+
+```
+// file: primes_table.cpp
+const int primes_table[] = { 2, 3, 5, 7, 11 };
+void show_primes() {
+    for (auto x : primes_table)
+        std::cout << x << ' ';
+    std::cout << std::endl;
+}
+```
+```
+// file: main.cpp
+int main() {
+    show_primes();
+    for (auto x : primes_table)
+        std::cout << x << ' ';
+    std::cout << std::endl;
+}
+
+```
+
+* Then put definition of primes_table into *both* files …
+
+  * … with same initialization;
+  * … with different initialisation.
+
+* Finally include header file with the following content into both:
+
+```
+// file: primes_table.h
+extern const int primes_table[];
+```
+
+---
+template: plain
+name: pointers
+header: #### Pointers
+
+Pointers belong to the C++ subset of language features assumed from C.
+
+Differently typed pointers are generally incompatible with each other:
+```
+int i;   // a memory location to hold int-s
+int *ip = &i; // a pointer to that location
+float *fp = ip; // ERROR
+```
+
+.N[
+If the above assignment to `fp` would pass, via `*fp` the memory location
+holding an `int` could be accessed as if it were a `float`.._[]
+]
+
+This also defeats usage errors of multi-level pointers:
+```
+int **ipp = &ip;  // pointer to pointer
+int x = 3 * *ipp; // single indirection still leaves pointer
+                  // which cannot be multiplied by an int
+```
+
+.F[:
+Write access could even extend beyond that and change unrelated variables, if
+the type that determines memory space is smaller that the type the pointer
+claims to point to.
+]
+
+???
+
+##### Possible Explorations
+
+* Show various errors when mixing differently typed pointers.
+
+* Understand and explain the messages.
+
+---
+template: plain
+header: #### Typed Pointers vs. Generic Pointers (`void *`)
+
+There is a difference between C and C++ in compatibility of typed and generic
+pointers in, which adds more type safety:
+
+.pull-left[
+In C type compatibility is both ways, from generic to typed and from typed to
+generic pointers:
+```
+int *ip;
+…
+void *p = ip;  // C: OK
+float *fp = p; // C: OK
+```
+]
+.pull-right[
+In C++ type compatibility is one-way – from generic to typed is an error:._[]
+```
+int *ip;
+…
+void *p = ip;  // C++: OK
+float *fp = p; // C++: ERROR
+```
+]
+
+When at a given point the true nature of a generic pointer is known, it may be
+assigned back to the original typed pointer type using a cast:
+```
+int *ip2 = static_cast<int*>(p);
+```
+
+.F[:
+Despite slightly improved type safety in C++ generic pointers cut a big hole in
+compile-time type checking, as anyway at some point there needs to be a cast
+which requires that type information is somehow embedded in the program logic.
+If the set of possible types is bounded at design time, class hierarchies are
+usually a superior alternative while for type-generic coding – e.g. in basic
+libraries – parametrizing types via templates provides stringent type-checking
+at compile-time.
+]
+
+???
+
+##### Possible Explorations
+
+* Show errors when mixing generic and typed pointers.
+
+* Demonstrate `static_cast` is sufficient for going from `void*` to `T*`.
+
+* Demonstrate `reinterpret_cast` 
+
+---
+template: plain
+header: #### Arbitrary Type Conversions
+
+With the possibility of arbitrary type conversions it is easy to introduce type
+errors, in C++ too.
+
+While `static_cast` requires a generic pointers as intermediate, there is even
+a stronger tool (say sledge-hammer?) which directly fits together what really
+shouldn't fit:
+```
+int *ip;
+…
+float *fp = reinterpret_cast<float*>(ip);
+```
+
+Using pointer type conversions with `static_cast` and especially using any
+conversion with `reinterpret_cast` means **a lot of responsibility** is assumed
+for what is done is actually correct.
+
+.N[
+As C++ has far better language support for generic programming as C, low-level
+cast operations can be avoided in most any case.._[]
+]
+
+.F[:
+One of the few legitimate uses of `reinterpret_cast` is in driver programming
+to specify hardware addresses for memory mapped devices.
+]
+
+---
+template: plain
+header: #### `const` Qualifier for Pointers
+
+.N[
+Be sure to understand how `const` applies if pointers are involved!
+]
+
+.pull-left[
+
+The pointer itself is constant (and hence needs to be initialised):
+```
+T *const p = …;
+```
+]
+
+.pull-right[
+
+The memory location reachable via the pointer is constant:
+```
+T const *p;
+```
+Same as:
+```
+const T *p;
+```
+]
+
+In some situations even both should be protected against modifications, the
+pointer and the memory to which it points:._[]
+```
+const T *const p = …; // a unmodifiable pointer to an
+                      // unmodifiable memory location
+                      // of type T
+```
+.F[:
+Of course `T const *const p = …;` would have the same meaning.
+]
+
+---
+template: plain
+name: references
+header: ### References
+
+References are more or less a different syntax for pointers.
+
+* They are declared with a leading `&` – instead of a leading `*`;
+
+* They must be initialised with some variable to which it refers,
+
+  * i.e. the `&`-operator – take address – is implicitly applied to that
+    variable.
+
+* When used, a reference is automatically dereferenced,
+
+  * i.e. the `*`-operator – follow pointer, get content – is implicitly
+    applied.
+
+.N[
+Conceptually a reference is always connected to an existing entity –
+there is no such thing as a "Null Reference" akin to a "Null Pointer".._[]
+]
+
+.F[:
+Nevertheless, an incautious programmer may accidentally create invalid
+references, e.g. like that:  
+`void f(T *p) { …; T &r = *p; … }` (when `p` is not checked against the
+Null Pointer)
+]
+
+---
+template: plain
+header: #### References Viewed as Aliases
+
+A reference may also be viewed as an alias for an existing variable:
+```
+int i;
+…
+int &r = i;   // any access to r effectively accesses i
+```
+
+.N[
+The main use for this feature is for function arguments, where it minimises the
+syntactical overhead of explicit pointer use.
+]
+
+---
+template: plain
+header: #### References versus Pointers
+
+Two function that swap their argument values, one using pointers, one using
+references …
+
+.pull-left[
+```
+void swap(int *p1, int *p2)
+{
+    int tmp = *p1;
+    *p1 = *p2;
+    *p2 = tmp;
+}
+```
+]
+
+.pull-right[
+```
+void swap(int &r1, int &r2)
+{
+    int tmp = r1;
+    r1 = r2;
+    r2 = tmp;
+}
+```
+]
+
+… and their usage:
+
+.pull-left[
+```
+int a, b;
+…
+if (a < b)
+    swap(&a, &b);
+```
+]
+
+.pull-right[
+```
+int a, b;
+…
+if (a < b)
+    swap(a, b);
+```
+]
+
+---
+template: plain
+header: #### `const`-References
+
+As references cannot be changed after initialization._[] they really are like
+`const` pointers – but this should not be confused with pointers to `const`:
+
+.pull-left[
+```
+const int ci = 42;
+int i;
+int &ri = i;         // OK
+const int &cri = ci; // OK
+const int &cri2 = i; // OK
+ri = …;    // OK to modify
+cri2 = …;         // ERROR
+int &ri2 = ci;    // ERROR
+```
+]
+
+.pull-right[
+```
+const int ci = 42;
+int i;
+int *const ip = &i;
+const int *const cip = &ci;
+const int *const cip2 = &i;
+*ip = …;   // OK to modify
+*cip2 = …;        // ERROR
+int *ip2 = &ci;   // ERROR
+```
+]
+
+Any access to `ri`, `cri`, and `cri2` actually accesses the referenced
+variable, while applying `&` takes the address of it. Vice versa with pointers:
+here the plain variable usage represents the address held and applying the
+dereferencing operator `*` accesses the content of that memory location.
+
+.F[:
+To put it more clearly: a reference refers to the same storage location all of
+its lifetime, like a pointer that cannot be set to a different location. A
+different question is whether the storage location *reachable* through the
+reference can be modified – and this is what this page is about.
+]
+
+---
+template: plain
+header: #### Lvalue- and Rvalue-References
+
+A special property of `const` references is that they may be initialised with
+temporaries, typically resulting from an expression of matching type:._[]
+
+.pull-left[
+```
+int a, b;
+…
+int &r = a;            // OK
+int &r2 = a + b;       // ERROR
+const int &r3 = a + b; // OK
+```
+In the last case temporary memory space must be created – for the result of the
+addition – and will be kept alive for the life-time of the reference.
+]
+
+.pull-right[
+A recent addition of C++11 are [Rvalue References].  
+**These can only be initialised with temporaries.**
+```
+int &&rr = a + b; // OK
+int &&rr2 = a;    // ERROR
+int &&rr3 = a + 0;   // OK
+```
+.N[
+The main use of rvalue-references is to add move-versions of (copy-)
+[constructor](#move_constructor) and [assignment](#move_assignment), which
+will be covered later.
+]
+]
+
+[Rvalue References]: http://en.cppreference.com/w/cpp/language/reference
+
+.F[:
+Early versions of C++ allowed this for non-`const` references too but it
+turned out to be an error prone feature and was finally removed in later
+versions of C++ on which C++-98 was based.
+]
+
+---
+template: plain
+header: #### When to Use References?
+
+References should be generally preferred as function arguments for
+
+* handing over  anything else besides basic types efficiently, as only an
+  address needs to be transferred, not all of the data structure copied;
+* giving access to the object itself for applying modifications.
+
+.N[
+Use a `const` qualified reference to protect some function argument from
+modifications while – behind the scenes – only handing-over its address.
+]
+
+.pull-left[
+
+[ADT]._[] to implement a counter that
+restarts at a given value once
+it had reached a given limit:
+```
+typedef struct {
+    int limit; // maximum value
+    int start; // restart value
+    int ticks; // current value
+} counter;
+```
+]
+
+[ADT]: http://www.youtube.com/watch?v=HcxqzYsiJ3k
+
+
+.pull-right[
+```
+int value(const counter &c) {
+    return c.ticks;
+}
+```
+```
+void count(counter &c) {
+    if (++c.ticks > c.limit)
+        c.ticks = c.start;
+}
+```
+]
+
+.F[:
+ADT means abstract data type and (in the example above) comes close to what can
+be done with classes in C++. (In a "pure C" solution references can be easily
+replaced by pointers.)
+]
+
+---
+template: plain
+name: default_args
+header: ### Default Arguments
+
+Function arguments can have defaults, which means that the actual call can
+leave out such arguments.._[]
+
+```
+void say_hello(const char *greet = "hello") {
+    cout << greet << endl;
+}
+```
+Possible calls:
+```
+say_hello();
+say_hello("salve");
+```
+
+The default value must be present in a prototype that declares the function and
+in this case the argument name is optional:
+```
+extern void say_hello(const char * = "hello");
+```
+
+---
+template: plain
+name: function_ovld
+header: ### Function Overloading
+
+Functions may be overloaded based on their signature, which consists of
+
+* the function name and argument list
+* but **not** the function return type.
+
+```
+void say_hello(const char *greet) {
+    cout << greet << endl;
+}
+void say_hello(int repeat, const char *greet) {
+    do
+        cout << greet << endl;
+    while (--repeat > 0)
+}
+```
+Possible calls:
+```
+say_hello("hi!");
+say_hello(3, "hi!");
+```
+
+---
+template: plain
+name: operator_ovld
+header: ### Operator Overloading
+
+Operators may be overloaded too, but only if at least one of operand is not a
+basic type.._[]
+```
+enum Color { Red, Blue, Green };
+Color operator++(Color& c) {
+    switch (c) {
+        case Red: return c = Blue;
+        case Blue: return c = Green;
+        case Green: return c = Red;
+        default: assert(!"never executed");
+    }
+}
+```
+
+.F[:
+For basic types operators are already defined – or forbidden – and that meaning
+cannot be changed.
+]
+
+---
+template: plain
+name: oop_intro
+header: ## Object Oriented Programming
+
+This chapter introduces not a minor but a substantial extensions C++ has over
+C, using a "limit counter" implemented as abstract data type as an example that
+gets gradually extended.._[]
+
+* [From `struct` to `class`	](#struct_to_class)
+* [Access Protection		](#access_protection)
+* [Constructors			](#constructors)
+* [Base and Derived Classes	](#base_and_derived)
+* [`virtual` Member Functions	](#virtual_members)
+
+.N.center[
+At the low-level C++ classes still are
+[data `struct`-ures mapped to memory](#class_to_memory), while *Composition*
+and *Inheritance* are more or less nested data structures with some specific
+rules for type (in-) compatibility.
+]
+
+.F[:
+There are generally two roads leading to C++, the first one, which is taken
+here, *step by step* turns C style programming into making use of classes and
+objects. The other road would radically cut off with all *"traditionally
+thinking"* and especially all *"old code"* and mandate a *"completely different
+approach"* from *"classic procedural design"*. It will often start with
+teaching design methodology, probably via the use of
+[UML Diagrams](#quick_uml). Though some proficiency with the latter will surely
+pay to document [OOP High-Level Designs](#class_design) it is **not at all**
+necessary to get substantial added value by a move from C to C++.
+]
+
+---
+template: plain
+name: struct_to_class
+header: ### From `struct` to `class`
+
+#### Turning Functions into Members
+
+C++ allows to define functions that take a pointer to a `struct` as (first)
+argument inside the class as members (aka. member functions):
+```
+struct LimitCounter {
+    int start;
+    int limit;
+    int ticks;
+    void init(int st, int lim);
+    void count();
+    void reset();
+};
+```
+
+.N[
+The argument to hand over the limit counter data is now implied and not named
+any more in the list of arguments.
+]
+
+---
+template: plain
+header: #### Defining `LimitCounter` Objects
+
+Objects (aka instances) of limit counters would be defined as follows:
+```
+    LimitCounter lc1, lc2;
+```
+
+#### Calling Member Functions
+
+When calling the member function syntactically the object is on the left:
+```
+    lc1.init(1, 10);
+    lc2.init(0, 59);
+```
+
+.N[
+From a low-level point of view there is no difference to a global function with
+an explicit pointer argument, as the address of the objects `lc1` and `lc2` is
+received by the member function as `this` (-pointer).
+]
+
+---
+template: plain
+header: #### Implementing Member Functions
+
+Of course, the function inside the class are just declarations that must be
+implemented too. This would look like follows:
+```
+void LimitCounter::init(int st, int lim) {
+    this->start = this->ticks = st;
+    this->limit = lim;
+}
+
+```
+As `this->` is assumed by default for any name that is not local or part of the
+argument list, it is usually omitted:
+```
+void LimitCounter::count() {
+    if (++ticks > limit)
+        ticks = start;
+}
+
+```
+
+---
+template: plain
+header: #### Implementing Member Functions Inline
+
+For efficiency reasons it usually makes sense to define small member functions
+wtih the `inline` keyword so that their body code is inserted instead of
+subroutine calls at the point of their use:
+```
+inline
+void LimitCounter::reset() {
+    ticks = start;
+}
+```
+.N[
+Then a "call" to this (simple) function like `lc1.reset()` will typically
+result in a single `mov` instruction at the machine level, which is both,
+faster **and** smaller as a subroutine call!
+]
+
+---
+template: plain
+header: #### Implementing Members Inside the Class
+
+Furthermore `inline` is automatically assumed if the function is implemented
+inside the class to which it belongs:
+```
+struct LimitCounter {
+    …
+    void reset() {
+        ticks = start;
+    }
+    …
+};
+```
+Whether to use this or an explicit `inline` with an implementation outside of
+the class is largely a matter of taste.
+
+.N[
+When classes are – as usual – defined in separate header files, `inline`
+implementations **must go to the header file** because the compiler needs to
+know them when it emits the code for a "function call".
+]
+
+---
+template: plain
+name: access_protection
+header: ### Access Protection
+
+It is usually considered "good style" if a user defined type protects its data
+members from direct access but adds accessors instead:
+.pull-left[
+```
+class LimitCounter {
+    int start;
+    int limit;
+    int ticks;
+public:
+    …
+    int value() const {
+        return ticks;
+    }
+    void count() {
+        if (++ticks > limit)
+            ticks = start;
+    }
+};
+```
+]
+
+.pull-right[
+The `const` qualifier for the member function – between the closing parenthesis
+and the opening curly brace – allows to call this function for non-modifiable
+`LimitCounter` instances:
+```
+void
+foo(const LimitCounter &c) {
+    cout << c.value(); // OK
+    c.count();      // ERROR
+}
+```
+]
+
+.F[:
+There are several common naming schemes for such accessors. A project should
+probably chose one of this schemes and apply it consistently for all its
+classes.
+]
+
+---
+template: plain
+name: protection_levels
+header: #### Levels of Access Protection
+
+There are several protection levels which can be interspersed as often as
+necessary with the members in `struct`- or `class`-blocks like labels:._[]
+
+* `public:` – accessible from outside
+* `private:` – accessible for member functions only
+* `protected:` – accessible for member functions and
+  [derived classes](#base_and_derived) (covered later)
+
+.pull-left[
+```
+class Mine {
+public:
+    …
+protected:
+    …
+private:
+    …
+};
+```
+]
+.pull-right[
+```
+class Other {
+    …
+public:
+    …
+private:
+    …
+public:
+    …
+};
+```
+]
+
+.F[:
+Despite the similar syntax these are **not** labels, as the names are reserved
+keywords and the syntax limits their use to `struct` and `class` blocks.
+]
+
+---
+template: plain
+name: struct_vs_class
+header: #### `struct` vs. `class`
+
+The only difference between `class` and `struct` is that the latter starts by
+default with a `public:` section and the former with a `private:` section.
+.pull-left[
+```
+struct Mine {
+private:
+    …
+public:
+    …
+};
+```
+```
+struct Other {
+    …
+private:
+    …
+};
+```
+]
+
+.pull-right[
+```
+class Mine {
+    …
+public:
+    …
+};
+```
+```
+class Other {
+public:
+    …
+private:
+    …
+};
+```
+]
+
+---
+template: plain
+name: constructors
+header: ### Constructors
+
+Classes may have Constructors which will – if they exist – be called
+automatically when an instance of the given class comes into existence:
+```
+class LimitCounter {
+    …
+public:
+    LimitCounter(int st, int lim) {
+        start = ticks = st;
+        limit = lim;
+    }
+};
+```
+Constructor arguments must now be supplied with the definition of instances:
+```
+    LimitCounter lc1(1, 10), lc2(0, 59);
+```
+
+---
+template: plain
+name: constructors
+header: #### Constructors: Member Initialisation Lists
+
+There is an alternative syntax to initialise data members, the *MI-list* (short
+for member initialisation list). Its use is mandatory when constants and
+references are initialised, but they may optionally be used always:
+```
+class LimitCounter {
+    const int start;
+    const int limit;
+    int ticks;
+public:
+    LimitCounter(int st, int lim)
+        : start(st), limit(lim), ticks(st)
+    {}
+    …
+}
+```
+.N[
+It is not at all unusual that – when the MI-list is used for all members – the
+constructor body stays empty.._[]
+]
+
+.F[:
+Of course, to maximize consistency by re-use, it might alternatively be
+considered in the above example to initialise `ticks` with a call to `reset()`
+from inside the constructor body.
+]
+
+---
+template: plain
+name: destructor
+header: ### Destructors
+
+The destructor is the complementary operation to the constructor.  
+
+It has the same name as the class prefixed with `~` and will automatically be
+called if an instance of the given class ceases to exist.
+
+There is no need for a destructor in the `LimitCounter` class.
+
+.N[
+An example for a class that actually needs a destructor follows in the section
+on [Dynamic Memory Allocation](#dynamic_memory).
+]
+
+---
+template: plain
+name: static_members
+header: ### Static Members
+
+Member variables and functions may be ´static`, which means they exist only
+once (for the class), not for every instance.
+
+As there is no need for static members in the `LimitCounter` example, the
+following shows how a class could count the number of its instances:._[]
+
+.pull-left[
+In the header defining the class:
+```
+// file: Foo.h
+class Foo {
+    …
+    static int instances;
+public:
+    Foo() { ++instances; }
+    ~Foo() { --instances; }
+    …
+};
+```
+]
+.pull-right[
+In exactly one translation unit:
+```
+// file: Foo.cpp
+…
+int Foo::instances = 0;
+…
+```
+]
+
+.F[:
+This example is actually incomplete as it omits the copy constructor (not
+covered so far) which would also need to be implemented as it must increment
+the `instances` count too.
+]
+
+---
+template: plain
+name: base_and_derived
+header: ### Base and Derived Classes
+
+Classes may be derived from other classes if they only want to extend some
+existing functionality.
+
+.N[
+The following defines a new class `OverflowCounter` which adds to a
+`LimitCounter` the capability that in case of an overflow it increments a
+connected counter.
+]
+
+The approach is shown step by step on the next pages.
+
+---
+template: plain
+name: base_and_derived
+header: #### Derive from a Base Class
+
+The syntax names the base class after the derived:
+```
+class OverflowCounter : public LimitCounter {
+    …
+};
+```
+The use of `public` here implies that an `OverflowCounter` can always replace a
+`LimitCounter`, which will become important soon.
+
+.N[
+If this kind of substitutability is not desirable, a `private` base class
+should be used.
+]
+
+---
+template: plain
+header: #### Add Members
+
+A derived class is always free to add member variables and functions._[]
+to what is inherited from its base class.
+
+.N[
+The `OverflowCounter` needs to add a reference to the next stage (which will
+count on overflow).
+]  
+Note that this is a different instance than the
+`LimitCounter` from which the `OverflowCounter` is derived!
+```
+class OverflowCounter : public LimitCounter {
+    LimitCounter &next;
+    …
+};
+```
+
+.F[:
+In this example no member functions are added.
+]
+
+---
+template: plain
+header: #### Add A Constructor
+
+To initialise data members added, a derived class usually needs its own
+constructor.
+
+```
+class OverflowCounter : public LimitCounter {
+    LimitCounter &next;
+public:
+    OverflowCounter(int st, int lim, LimitCounter &n)
+        : LimitCounter(st, lim), next(n)
+    {}
+    …
+};
+```
+.N[
+The constructor forwards its first two arguments to the constructors of its
+`LimitCounter` base class and uses the third (reference) argument to initialise
+`next`.
+]
+
+---
+template: plain
+header: #### OverflowCounter Overwriting `count`
+
+Of course, an `OverflowCounter` has a slightly different way to count compared
+to a `LimitCounter`.
+
+.N[
+Therefore it needs to replace the inherited `count()` member function.._[]
+]
+```
+void OverflowCounter::count() { // overriding inherited count
+    int old = value();     // calling inherited value()
+    LimitCounter::count(); // calling inherited count()
+                           // (qualification necessary here
+                           // to avoid recursive call !!)
+    if (value() < old)
+        next.count();  // calling next stage `count()`
+}
+```
+While this solution works, it looks (and is) clumsy, but any improvement would
+mean that the base class needs to take into account the needs of its derived
+class.
+
+.F[:
+The technical term here is "overriding", though in German literature this is
+often translated with "überscheiben" (= overwriting).
+]
+
+---
+template: plain
+header: #### Reducing Protection of Members
+
+One possibility for a more elegant way would be a reduced protection of its
+`limit` data member. The following makes it accessible for a derived class:
+```
+class LimitCounter {
+    …
+protected:
+    const int limit;
+    …
+}
+```
+The solution possible with this modification still looks clumsy:
+```
+void OverflowCounter::count() {
+    const bool will_reset = (value() == limit);
+    LimitCounter::count();
+    if (will_reset)
+        next.count();
+}
+```
+
+---
+template: plain
+header: #### Giving Hints to From Base Classes
+
+Another possibility were to have the base class give a hint to the derived
+class.
+
+In the scenario used as example so far this hint could be the return value of
+the `count` member function:
+```
+bool LimitCounter::count() {
+    if (++ticks > limit) {
+        ticks = start;
+        return true;
+    }
+    return false;
+}
+```
+
+---
+template: plain
+header: #### Using Hints in Derived Classes
+
+The derived class would now make use of this hint …
+```
+bool OverflowCounter::count() {
+    if (LimitCounter::count()) {
+        next.count();
+        return true;
+    }
+    return false;
+}
+```
+… but assuming it may in turn be used as base class from some derived class
+that needs this hint, it has to forward it accordingly via its own return
+value.
+
+.N.center[
+Still not a really nice solution!
+]
+
+---
+template: plain
+name: virtual_members
+header: ### `virtual` Member Functions
+
+As a special flavour of
+
+* General *Runtime Type Identification*
+
+* or RTTI._[] in short
+
+C++ provides virtual member functions.
+
+.N.center[
+It should be understood that
+[**calling** a `virtual` Member function](#virtual_mfn_call) comes at the cost
+of some indirection.
+]
+
+Furthermore, in most cases the body of a `virtual` member function can not be
+expanded inline, leading to a substantial performance penalty on modern
+hardware with fast local instruction caching and pre-fetch mechanisms,
+especially for small functions which otherwise are often desirable for
+modularity and other reasons.
+
+.F[:
+Another examples for the practical use of virtual member functions follows in a
+later section. Two very specific examples are in the optional Info-Graphics
+[here](#practical_rtti) – comparing the implicit and the explicit approach to
+run-time type identification – and [here](#two_open_close) – comparing two
+approaches in the spirit of the *Template Method Pattern*. (In great extent
+these examples can be found in books dealing extensively with OOP
+*Design Patterns*, like the [GoF-Book]).
+]
+
+[Gof-Book]: https://en.wikipedia.org/wiki/Design_Patterns
+
+
+---
+template: plain
+header: #### Adding Extension Points in the Base Class
+
+A far superior solution is possible if the base class (`LimitCounter`) had
+anticipated the needs of its derived classes and added an extension point:
+```
+class LimitCounter {
+    …
+    virtual void overflow() {}
+public:
+    void count();
+    …
+};
+```
+The base class does nothing in this case – except calling a function that
+returns immediately:
+```
+void LimitCounter::count() {
+    if (++ticks > limit) {
+        ticks = start;
+        overflow();
+    }
+};
+```
+
+---
+template: plain
+header: #### Hooking Code to Extension Points from Derived Classes
+
+This would be the **full** code of the class `OverflowCounter` then:
+```
+class OverflowCounter : public LimitCounter {
+    LimitCounter &next;
+    virtual void overflow() {
+        next.count();
+    }
+public:
+    OverflowCounter(int st, int lim, LimitCounter &n)
+        : LimitCounter(st, lim), next(n)
+    {}
+};
+```
+.N[
+Especially there is no need any more to override the `count()` member function
+inherited from `LimitCounter` – instead the function for the extension point is
+overridden one.._[]
+]
+
+.F[:
+An advantage achieved thereby is that it cannot be forgotten to call the
+inherited function from the overwritten one.
+]
+
+---
+template: plain
+header: #### A Chain of Counters
+
+Now a chain of counters can be build, e.g. to act as display of a clock:
+```
+int main() {
+    LimitCounter hours(0, 23);
+    OverflowCounter minutes(0, 59, hours);
+    OverflowCounter seconds(0, 59, minutes);
+    …
+    // probably in a loop ...
+        seconds.count();
+    …
+}
+```
+The fact that the "middle" counter (`minutes`) can be used as constructor
+argument for another `OverflowCounter` is worth mentioning here:
+
+.N[
+It is only possible because the `OverflowCounter` has the `LimitCounter` as
+`public` base class and therefore – as an instance of the derived class – the
+former is always accepted as a substitute for the latter.
+]
+
+---
+template: plain
+name: alternative_design
+header: ### Alternative Design
+
+An alternative design could use **one class only** that is similar to the
+`OverflowCounter` used so far. The difference is that it connects the next
+counter – the one which counts on overflow – via the member `pnext` which is a
+pointer and is a null pointer if there is no next counter attached.
+```
+class OverflowCounter {
+    const int start;
+    const int limit;
+    int ticks;
+    OverflowCounter *pnext;
+public:
+    OverflowCounter(int st, int lim, OverflowCounter *pn = 0)
+        : start(st), limit(lim), pnext(pn)
+    {}
+    void count() {
+        if ((++ticks > limit) && (pnext != 0))
+            pnext->count();
+    }
+    …
+};
+```
+
+---
+template: plain
+name: exception_intro
+header: ## Introduction to Exceptions
+
+[Basically exceptions are](#exception_basics)
+
+* non-local branches,
+
+* backwards in the call tree,
+
+* to a `catch`-block in a function that has not yet returned,
+
+* and its preceding `try`-block active.._[]
+
+.F[:
+Some more specific information on exceptions is provided in an separate
+[Info-Graphic](#exception_specifics).
+]
+
+---
+template: plain
+name: exception_throw
+header: ### Throwing Exceptions
+
+A `throw` statement is used to terminate current processing.
+
+It needs to be followed by an expression, which has a type and a value.._[]
+
+* Sometimes basic types are used as exceptions,
+* but typically a class (or small class hierarchy) is defined for that
+  purpose.
+
+```
+… throw 42;                 // integer thrown
+… throw "let me out here!"; // const char* thrown
+… throw ErrorX(12, 15);     // instance of class ErrorX thrown
+```
+
+.F[:
+A `throw`-statement usually is only conditionally, i.e. when a certain
+condition is detected that prevents following the ordinary flow of control any
+further.
+]
+
+---
+template: plain
+name: exception_throw
+header: ### Catching Exceptions
+
+The `catch` block defines a parameter which acts much like a function
+argument.._[]
+
+* Actually it receives the value of the expression thrown,
+* therefore its type must be compatible with the type thrown.
+
+Catch 42 (and other int-s):
+```
+try { … } catch (int x) { … }
+```
+Catch `"let me out here"` (and other C-style strings):
+```
+try { … } catch (const char* txt) { … }
+```
+Catch instances of class `ErrorX` and classes publicly derived from `ErrorX`:
+```
+try { … } catch (ErrorX &ex) { … }
+```
+
+.F[:
+The examples shown here are written into a single line only to safe some space.
+Usually the `try`- and `catch`-block would be formatted to extend over several
+lines, as is necessary from its contents. The examples shown here are written
+into a single line only to safe some space. Usually the `try`- and
+`catch`-block would be formatted to extend over several lines, as is necessary
+from its contents.
+]
+
+---
+template: plain
+name: configurable_exceptions
+header: ### Configurable Exceptions
+
+A strategy to make the throwing of exceptions configurable could be not to
+throw directly but through a virtual member function:._[]
+```
+struct ErrorX {
+    ErrorX(int, int);
+};
+…
+class Mine {
+    virtual void error_X(int, int) = 0;
+public:
+    void do_it() {
+        …
+        if (…) error_X(12, 15);
+        …
+    }
+};
+```
+.F[:
+As shown so far `Mine` is an abstract class which can only be used as base
+class for derived classes like those shown on the next pages. Of course one of
+these following classes could also serve as default implementation.
+]
+
+---
+template: plain
+header: ### Configurable Exceptions (2)
+
+Instances of the following class actually throw when the error happens:
+```
+class ThrowingMine : public Mine {
+    virtual void error_X(int a, int b) { throw ErrorX(a, b); }
+}
+```
+Instances of this class ignore the problem:
+```
+class NonThrowingMine : public Mine {
+    virtual void error_X(int, int) { /*empty*/ }
+}
+```
+
+---
+template: plain
+name: dynamic_memory
+header: ## Dynamic Memory Allocation
+
+Dynamic memory (aka *heap allocation*) is requested with:
+
+* `new T` – where `T` is any datatype, memory has sufficient size to store and
+  proper alignment to store one item of type `T`;
+
+* `new T[n]` – where T is any datatype and `n` is a positive integral number,
+  memory has sufficient size ans proper alignment to store `n` items of type
+  `T` as they were stored in an array.
+
+Dynamic memory is release with:
+
+* `delete p` – where `p` is of type pointer to `T` and has received its value
+  from `new T`;
+
+* `delete[] p` – as before but `p` has received its value from `new T[n]`.
+
+.W[
+Releasing memory that was allocated with `new T[n]` with `delete` or releasing
+memory that was allocated with `new T` with `delete[]` results in undefined
+behavior.
+]
+
+---
+template: plain
+header: ##### `RingBuffer` Example
+
+A class RingBuffer to store `N` integers for easy FIFO-access might have the
+following implementation:
+```
+class RingBuffer {
+    int alloc;    // ORDER DEPENDENCY (1)
+    int *data;    // ORDER DEPENDENCY (2)
+    int iput;
+    int iget;
+    static int wrap(int x) { return x % alloc; }
+public:
+    RingBuffer(int n);
+    ~RingBuffer();
+    bool get(int &);
+    void put(int);
+    bool empty() const { return iput == iget; }
+    bool full() const { return wrap(iput + 1) == iget; }
+    RingBuffer(const RingBuffer &) = delete;
+    RingBuffer &operator=(const RingBuffer &) = delete;
+};
+```
+
+(The ORDER DEPENDENCY comment will be explained on the next page.)
+
+---
+template: plain
+header: ##### `RingBuffer` Example (2)
+
+Memory management is done from the constructor and destructor:
+
+```
+// constructor allocating dynamic memory
+RingBuffer::RingBuffer(int n)
+    : alloc(n+1), data(new int[alloc]), iget(0), iput(0);
+{}
+
+// destructor releasing dynamic memory
+RingBuffer::~RingBuffer() {
+    delete[] data;
+}
+```
+.W[
+From looking into the MI-list it seems obvious that `alloc` is initialised
+prior to its use in the initialisation of `data` …
+]
+
+… but initialisation order is determined by the order of member variables in
+the class definition – changing this order may break the above code.._[]
+
+.F[:
+DEPENDENCY ORDER comments in the class faithfully try to defeat this but it
+might be wiser to chose a defensive and more robust style, e.g. by using `n+1`
+instead of `alloc` in the initialisation of `data`.
+]
+
+---
+template: plain
+header: ##### `RingBuffer` Example (3)
+
+By deleting the copy constructor and the assignment operator an object of type
+`RingBuffer` may not be copied or assigned.
+
+If the `RingBuffer` should be copyable, the implementation of the copy
+constructor could look as follows:
+```
+RingBuffer::RingBuffer(const RingBuffer &init)
+    : alloc(init.alloc), data(new int[alloc])
+    , iget(init.iget), iput(init.iput) {
+    std::memcpy(data, init.data, alloc*sizeof(int));
+}
+```
+It would be called in scenarios like this:
+```
+void foo(RingBuffer arg); // call by value argument!
+RingBuffer a(10);
+…
+RingBuffer b = a; // copy constructor initialises new object
+RingBuffer c(a);  // b as before, only different syntax
+foo(b); // copy constructor used to initialise value argument
+```
+
+---
+template: plain
+header: ##### `RingBuffer` Example (4)
+
+The implementation of copy assignment operator could look as follows:
+```
+RingBuffer& RingBuffer::operator=(const RingBuffer &rhs) {
+    if (this != &rhs) {
+        alloc = rhs.alloc;
+        int *tmp = new int[alloc];
+        std::memcpy(tmp, rhs.data, alloc*sizeof(int));
+        delete[] data;
+        data = tmp;
+        iget = rhs.iget;
+        iput = rhs.iput;
+    }
+    return *this;
+}
+```
+It would be called in scenarios like this:
+```
+RingBuffer a(10), b(100);
+…
+b = a; // copy assignment discards memory space previously
+       // allocated, allocates new space and copies content
+```
+
+---
+template: plain
+name: move_constructor
+header: ##### `RingBuffer` Example (5)
+
+If the `RingBuffer` needs only to be movable (or as an optimization if it is
+copyable and made movable in addition), the move constructor could look as
+follows:
+```
+RingBuffer::RingBuffer(RingBuffer &&init)
+    : alloc(init.alloc), data(init.data)
+    , iget(init.iget), iput(init.iput) {
+    init.data = nullptr;
+}
+```
+It would be called in scenarios like this:
+```
+RingBuffer foo();
+void bar(RingBuffer);
+…
+RingBuffer a = foo(); // initialization with temporary
+RingBuffer a(foo());  // as before, only different syntax
+bar(foo());  // value argument initialised with temporary
+```
+
+---
+template: plain
+name: move_assignment
+header: ##### `RingBuffer` Example (6)
+
+Furthermore, the implementation of a move assignment operator could look as
+follows:
+```
+RingBuffer& RingBuffer::operator=(RingBuffer &&rhs) {
+    alloc = rhs.alloc;
+    delete[] data;
+    data = rhs.data;
+    rhs.data = nullptr;
+    iget = rhs.iget;
+    iput = rhs.iput;
+    return *this;
+}
+```
+It would be called in scenarios like this:
+```
+RingBuffer foo();
+…
+RingBuffer a(10);
+a = foo(); // move assignment discards memory space previously
+           // allocated, then "steals" pointer from temporary
+```
+
+---
+template: plain
+header: ##### `RingBuffer` Example (7)
+
+Only for completeness: this are the member functions that fill in or take out
+elements:
+```
+// add an element
+void RingBuffer::put(int e) {
+    if (full()) iget = wrap(iget) + 1;
+    data[iput] = e;
+    iput = wrap(iput+1);
+}
+// retrieve an element
+bool RingBuffer::get(int &e) {
+    if (empty()) return false;
+    e = data[iget];
+    iget = wrap(iget+1);
+    return true;
+}
+```
+
+---
+template: plain
+name: pointers_revisited
+header: ### Pointers Revisited
+
+One of the problem with pointers that their type does reflect too little of the
+use pattern.
+
+* There are pointers that allow to access some memory that
+
+  * exists already before the referring pointer comes into live
+  * and will continue to exist when the life of the referrer ends.
+
+* There are pointers that have exclusive ownership to dynamic memory
+
+  * they need to `delete` when they go out of scope,
+  * except they transfer ownership to some other exclusive owner.
+  
+* There are pointers that have non-exclusive ownership to dynamic memory that
+  needs to be `delete`-ed when the life of the last of them ends.
+
+---
+template: plain
+header: ### Smart Pointers
+
+C++11 introduced new types of pointers designed to solve the problem of unique
+and shared ownership:
+
+* `unique_ptr<T>` (where `T` is any concrete type) implement the concept of
+  unique ownership and therefore are not copyable but can be moved.
+
+* `shared_ptr<T>` (where `T` is any concrete type) implement the concept of
+  shared ownership maintaining a reference count.
+
+[Smart Pointers](#smart_pointers) are provided as classes with overloaded
+pointer-operations to make them usable in an easy way – **just like native
+pointers**.
+
+.N[
+Knowing the principles and some intricacies of their implementation **is NOT AT
+ALL a requirement** but can surely help to come to a better understanding and
+also some guidelines for their correct use.
+]
+
+---
+template: plain
+name: std_unique_ptr
+header: ##### `RingBuffer` Example with `std::unique_ptr`
+
+If the `RingBuffer` used as example in the previous section has no requirement
+to be copyable it could be simplified as follows:
+```
+class RingBuffer {
+    int alloc;
+    std::unique_ptr<int[]> data;
+    …
+public:
+    RingBuffer(int n)
+        : alloc(n+1), data(new int[alloc]), …
+    …
+};
+```
+
+* No explicit move constructor and assignment is necessary any more as the
+  default versions do the right thing.  
+
+* A copy constructor and assignment – doing the **wrong** thing by default – is
+  **not** automatically supplied as `unique_ptr` is not copyable.
+
+---
+template: plain
+name: std_shared_ptr
+header: ### Beyond Unique Ownership
+
+Besides `std::unique_ptr` C++11 added._[] two more "Smart Pointers":
+
+* `std::shared_ptr` and
+
+* `std::weak_ptr`
+
+.N[
+Neither of both is covered here in detail, but feel free to ask for more
+information based on the [Infographic "Smart Pointers"](#smart_pointers) in the
+appendix.
+]
+
+In short, both apply in scenarios which runtime systems of other programming
+languages solve with [Garbage Collection] (or GC).
+
+[Garbage Collection]: https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)
+
+The main difference from true GC is that
+
+* while consequently using `std::shared_ptr` solves the problem of "pointers
+  going stale" (aka. "dangling references)
+
+* in some circumstances there is still the need for a careful design mixing-in
+  `std::weak_ptr` to reliably avoid memory leaks.
+
+.F[:
+C++11 also deprecated `std::auto_ptr`, which – to quote Bjarne Stroustrup –
+should always have been what `std::unique_ptr` now is but couldn't, as C++98
+lacked the distinction between *Move* and *Copy*.
+]
+
+---
+template: plain
+name: template_intro
+header: ## Template Introduction
+
+Templates are available as mechanism for
+[classes and functions](#template_basics) to
+[parametrize types and compile time constants](#param_types_sizes).
+
+.N.center[
+
+Templates **avoid source code duplication**._[] when
+
+**"*The Only Thing that Differs Is a Type*"**
+
+(or some compile time constant)
+]
+
+An even more advanced view of templates is that they are
+
+* Compile-Time Functions doing
+* Type Transformations
+
+finally leading to
+[Template Meta-Programming](http://en.wikipedia.org/wiki/Template_metaprogramming)
+
+.F[:
+Emphasis here is on **source** code: As the "same" operations with different
+types typically require different machine instructions, the total amount of
+machine code is not different from a "Copy & Paste" approach with subsequent
+systematic changes.
+]
+
+---
+template: plain
+header: ##### Template Example
+
+A `RingBuffer` like the one used in the last series of examples might also be
+useful for element types other than `int`.
+```
+template<typename T>
+class RingBuffer {
+    int alloc;
+    T *data;
+    int iput;
+    int iget;
+    static int wrap(int x) { return x % alloc; }
+public:
+    RingBuffer(int n);
+    ~RingBuffer();
+    bool get(T &);
+    void put(const T&);
+    …
+};
+```
+Note that not **all** occurrences of the type `int` have been replaced, as some
+are not related to the element type but used as sizes or indices!
+
+---
+template: plain
+header: ##### Template Example (2)
+
+The constructor will change as follows:
+```
+template<typename T>
+RingBuffer<T>::RingBuffer(int n)
+    : alloc(n+1)
+    , data(new T[n+1]),
+    , iget(0)
+    , iput(0)
+{}
+```
+
+.N[
+Of course any function implemented outside the class – not only the constructor
+– must be modified accordingly.
+]
+
+Two more examples follow on the next page.
+
+---
+template: plain
+header: ##### Template Example (3)
+
+```
+template<typename T>
+void RingBuffer<T>::put(const T& e) {
+    if (full()) iget = wrap(iget) + 1;
+    data[iput] = e;
+    iput = wrap(iput+1);
+}
+```
+
+```
+template<typename T>
+bool RingBuffer<T>::get(T &e) {
+    if (empty()) return false;
+    e = data[iget];
+    iget = wrap(iget+1);
+    return true;
+}
+```
+
+---
+template: plain
+header: ##### Template Example (4)
+
+If sizing the `RingBuffer` dynamically is not required, the data array could be
+turned into a member variable and its size be given with another template
+argument:
+```
+template<typename T, std::size_t N>
+class RingBuffer {
+    T data[N+1];
+    int iput;
+    int iget;
+    static int wrap(int x) { return x % (N+1); }
+public:
+    bool get(T &);
+    void put(T);
+    bool empty() const { return iput == iget; }
+    bool full() const { return wrap(iput + 1) == iget; }
+};
+```
+It should be noted that this change relieves the `RingBuffer` from the memory
+management burden it previously had.
+
+---
+template: plain
+header: ##### Template Example (5)
+
+The second argument now becomes also part of the member function definitions
+outside the class:
+```
+template<typename T, std::size_t N>
+void RingBuffer<T, N>::put(T e) {
+    if (full()) iget = wrap(iget) + 1;
+    data[iput] = e;
+    iput = wrap(iput+1);
+}
+```
+```
+template<typename T, std::size_t N>
+bool RingBuffer<T, N>::get(T &e) {
+    if (empty()) return false;
+    e = data[iget];
+    iget = wrap(iget+1);
+    return true;
+}
+```
+
+---
+template: plain
+header: ##### Template Example (6)
+
+Though the parameter `N` was not used in the member function implementations
+shown so far, it is available, if necessary.
+
+The following member function determines the count of elements stored:._[]
+```
+template<typename T, std::size_t N>
+std::size_t RingBuffer<T, N>::size() const {
+    return (iget < iput)
+        ? (iput – iget)
+        : (iput + N + 1 - iget);
+}
+```
+
+.F[:
+Of course, such a function would also need to be declared in the `RingBuffer`
+class, which has been omitted here for brevity.
+]
+
+---
+template: plain
+header: #### Using Templates for Policies
+
+To pick up the example of the chapter on exceptions, here is another
+possibility shown how a client may determine the error handling policy of class
+`Mine`, using a template-based policy.
+
+The `ErrorPolicy` private base class encapsulates the decision how to handle
+the error:
+```
+template<class ErrorPolicy>
+class Mine : private ErrorPolicy {
+    using ErrorPolicy::error_X;
+public:
+    void do_it() {
+        …
+        if (…) error_X(12, 15);
+        …
+    }
+};
+```
+
+---
+template: plain
+header: #### Using Templates for Policies (2)
+
+Following are two examples for concrete policies:
+```
+class ThrowingPolicy {
+    void error_X(int a, int b) { throw ErrorX(a, b); }
+};
+
+class NonThrowingPolicy {
+    void error_X(int, int) { /*empty*/ }
+};
+```
+Throwing and non-throwing versions of class `Mine`:
+```
+typedef Mine<ThrowingPolicy> ThrowingMine;
+typedef Mine<NonThrowingPolicy> NonThrowingMine;
+```
+.N[
+The advantage here is that especially in the non-throwing variant the empty
+function will generate no code at all, while with virtual member functions
+there would be a jump into a subroutine that just returns immediately.
+]
+
+---
+template: plain
+name: meta_programming
+header: #### Template Meta-Programming
+
+As an advance example to motivate the necessity of meta-programming, look at
+the argument of the `RingBuffer::put` member function:
+```
+template<typename T, std::size_t N>
+class RingBuffer {
+    …
+    void put(const T &e);
+    …
+};
+```
+Using a constant reference here is a safe choice but not a good solution in
+every case – in fact, small basic types are better handed over by value.
+
+.N[
+What we would need were a function that turns the (generic) template argument
+`T` into either a `const T&` (for the general case) or leave it at `T`
+(especially for small basic types).
+]
+
+---
+template: plain
+header: #### Boost Call Traits
+
+Such a compile time function already exists (in a utility library of the
+[Boost Platform]) and would be used as follows:._[]
+```
+template<typename T, std::size_t N>
+class RingBuffer {
+    …
+    void put(typename boost::call_traits<T>::param_type e);
+    …
+};
+```
+
+[Boost Platform]: http://www.boost.org
+
+.F[:
+Only in case you are curious for the implementation, the basic strategy is
+laid-out here:
+
+```
+
+// first handle the general case – by default use a constant reference:
+template<typename T> struct call_traits { typedef const T& param_type; };
+// then template specializations for small types: bool, char, short, ...
+template<> struct call_traits<bool> { typedef T param_type; };
+template<> struct call_traits<char> { typedef T param_type; };
+template<> struct call_traits<short> { typedef T param_type; };
+…
+// then maybe partial specialization for pointer types:
+template<typename T> struct call_traits<T*> { typedef T param_type; }
+```
+]
+
+---
+template: plain
+name: library_overview
+header: ## Standard Library Overview
+
+Frequently useful library components are:
+
+* [The class `std::string`](#std_string)
+* [Classes for Stream Handling](#std_iostream)
+* [Container Classes from the STL](#stl_containers)
+* [Algorithms from the STL](#stl_algorithms)
+
+---
+template: plain
+name: std_string
+header: ### Standard String Class
+
+[`std::string`]: http://de.cppreference.com/w/cpp/string/basic_string
+
+The [`std::string`] is designed to be used much like a built-in type.
+
+The following program fragment prints the largest word from its input (in
+lexicographical sort order):
+```
+string word;
+string maxword:
+while (cin >> word) {
+    if (maxword < word) maxword = word;
+}
+cout << maxword << endl;
+```
+
+.N[
+As the class `std::string` is not covered in much detail here feel free to
+ask for more information based on the
+[Infographic "Standard Strings"](#std_string_basics) in the appendix.
+]
+
+---
+template: plain
+name: std_iostream
+header: ### Classes for Stream Handling
+
+Support for handling data streams – mainly dealing with the aspects of
+abstraction and transparent buffering – falls into two big groups:
+
+* [`std::istream`] and [`std::ostream`] hosting all the input and output
+  operations while decoupling the actual data source or sink.
+
+* [`std::ifstream`] and [`std::ofstream`] using a classical (external) file
+  as data source or sink.
+
+* [`std::istringstream`] and [`std::ostringstream`] using an [`std::string`] as
+  data source or sink.
+
+[`std::string`]: http://de.cppreference.com/w/cpp/string/basic_string
+[`std::istream`]: http://en.cppreference.com/w/cpp/io/basic_istream
+[`std::ostream`]: http://en.cppreference.com/w/cpp/io/basic_ostream
+[`std::ifstream`]: http://en.cppreference.com/w/cpp/io/basic_ifstream
+[`std::ofstream`]: http://en.cppreference.com/w/cpp/io/basic_ofstream
+[`std::istringstream`]: http://en.cppreference.com/w/cpp/io/basic_istringstream
+[`std::ostringstream`]: http://en.cppreference.com/w/cpp/io/basic_ostringstream
+
+.N.center[
+As the above classes are not covered in much detail here  
+feel free to ask for more information based on  
+the [Infographic "I/O-Stream Basics](#io_stream_basics) in the appendix.
+]
+
+---
+template: plain
+header: #### A Poor Man's Approach to TDD
+
+Consider the following fragment that request a name as input and sends a greet
+of which this name is a part:
+```
+void say_hello()
+    string name;
+    cin >> name;
+    cout << "hello, " << name << endl;
+}
+```
+The first change required is to use function arguments instead of global stream
+objects:._[]
+```
+void say_hello(istream& in, ostream& out)
+    string name
+    in >> name;
+    out << "hello, " << name << endl;
+}
+```
+.F[:
+Arguments of `say_hello` might actually be named `cin` and `cout` and therefore
+shadow the global objects, but this is not recommended as it could quickly lead
+to misunderstandings.
+]
+
+---
+template: plain
+header: #### A Poor Man's Approach to TDD (2)
+
+Now some input can be prepared by using the
+
+* `std::istringstream prepared_input`
+
+while the output is received in the
+
+* `std::ostringstream received_output`
+
+and compared to the expectation:._[]
+```
+int main() {
+    istringstream prepared_input("Mary");
+    ostringstream received_output;
+    // -------------------------------------------
+       say_hello(prepared_input, received output);
+    // -------------------------------------------
+    assert(received_output.str() == "hello, Mary\n");
+    cout << "** TEST PASSED **" << endl;
+}
+```
+.F[:
+Of course, a serious automated test should make sure that the answer is not
+always `hello, Mary\n`, no matter what the input was … :-)
+]
+
+---
+template: plain
+name: stl_containers
+header: ### Container Classes from the STL
+
+The STL is [designed around *Containers* and *Algorithm*](#stl_design_overview)
+with an *Iterator Abstraction* as glue between the former.
+
+The container classes provided fall into two big categories:
+
+* [Sequential Containers](#sequential_containers)
+
+* [Associative Containers](#associative_containers)
+
+.N[
+In C++ the term container class denotes a class which is capable to store
+object (instances) of some other class.
+]
+
+---
+template: plain
+name: sequential_containers
+header: #### Sequential Containers
+
+C++98 defined the [following three](#stl_sequence_cont):
+
+* [`std::vector`] – contiguously stored objects (like in an native array) with
+  providing random access and insertion/removal **at one end** with O(1)
+  performance; existing elements are copied or moved to newly allocated memory,
+  if necessary.
+
+* [`std::list`] – non-contiguously stored objects with two links per element,
+  providing insertion/removal with O(1) performance **anywhere** (even for
+  other lists).
+
+* [`std::deque`] mixture of the above (objects store in array-like chunks),
+  combining random access and insertion/deletion at **both ends** (but not in
+  the middle.
+
+C++11 [added the following](#stl_sequence_cont):
+
+* [`std::array`] – light-weight wrapper providing sequential container
+  for native arrays.
+
+* [`std::forward_list`] – non-contiguously stored objects with one link per
+  element, providing less overhead for small payload per element.
+
+
+[`std::vector`]: http://en.cppreference.com/w/cpp/container/vector
+[`std::list`]: http://en.cppreference.com/w/cpp/container/list
+[`std::deque`]: http://en.cppreference.com/w/cpp/container/deque
+[`std::array`]: http://en.cppreference.com/w/cpp/container/array
+[`std::forward_list`]: http://en.cppreference.com/w/cpp/container/forward_list
+
+---
+template: plain
+name: associative_containers
+header: #### Associative Containers
+
+C++ 98 defined the [following four](#stl_associative_cont) (all contained
+elements stored in a balanced binary tree):
+
+* [`std::set`] – "key"-only container without duplicates, providing look-up
+  with O(log(N)) performance;
+* [`std::multiset`] – as before but allowing duplicates.
+
+<!-- -->
+
+* [`std::map`] – "key-value"-pair container without duplicates, providing
+  look-up with O(log(N)) performance;
+* [`std::multimap`] – as before but allowing duplicates.
+
+C++11 added the [following four](#stl_associative_cont) (all contained elements
+stored in a hash-based bucket-chain structure):
+
+* [`std::unordered_set`] – "key"-only container without duplicates, providing
+  element-lookup with O(1) performance;
+  performance for element look-up;
+* [`std::unordered_multiset`] – as before but allowing duplicates.
+
+<!-- -->
+
+* [`std::unordered_map`] – "key-value"-pair container without duplicates,
+  providing element look-up with O(1) performance;
+* [`std::unordered_multimap`] – as before but allowing duplicates.
+
+
+[`std::set`]: http://en.cppreference.com/w/cpp/container/set
+[`std::multiset`]: http://en.cppreference.com/w/cpp/container/multiset
+[`std::map`]: http://en.cppreference.com/w/cpp/container/map
+[`std::multimap`]: http://en.cppreference.com/w/cpp/container/multimap
+[`std::unordered_set`]: http://en.cppreference.com/w/cpp/container/unordered_set
+[`std::unordered_multiset`]: http://en.cppreference.com/w/cpp/container/unordered_multiset
+[`std::unordered_map`]: http://en.cppreference.com/w/cpp/container/unordered_map
+[`std::unordered_multimap`]: http://en.cppreference.com/w/cpp/container/unordered_multimap
+
+---
+template: plain
+name: stl_iterators
+header: #### Generic Container Iterators
+
+All STL containers provide iterators, abstracting the way to pass over all
+contained elements.
+
+A basic code fragment using iterators is sketched below:
+```
+vector<int> data;
+…
+for (vector<int>::iterator it = data.begin();
+                           it != data.end(); ++it)
+    … *it … // access element via dereferenced iterator
+```
+
+Using the new meaning of the keyword `auto` as defined by C++11 this could
+slightly abbreviated:._[]
+```
+for (auto it = data.begin(); it != data.end(); ++it) …
+```
+
+.F[:
+To forward iterate over all the content of a container, a C++11 range-based
+loop is even more compact:  
+`for (auto x : data) … x … // access element via placeholder x`
+]
+
+---
+template: plain
+name: map_iterators
+header: #### Iterating Over Maps
+
+When iterating over a map, the iterator represents an `std::pair` of the key
+and the associated value. The following is a program that counts the number of
+occurrences of all the words in some text:._[]
+```
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+int main() {
+    map<string, int> words;
+    string w;
+    while (cin >> w)
+        ++words[w];
+    for (auto it = words.cbegin(); it != words.cend(); ++it)
+        cout << it->first << ": " << it->second << endl;
+}
+```
+
+.F[:
+In the first book about the C Programming Language by B.Kernighan and
+D.M.Ritchie this program served as demonstration for handling dynamic data
+structure and had a total of approximately 100 lines.
+]
+
+---
+template: plain
+name: stl_algorithms
+header: ### STL Algorithms
+
+The STL specifies a number of algorithms for some typical processing
+requirements of elements in a container.
+
+The following fragment could be used to sort the contents of a container:
+```
+vector<int> data;
+…
+sort(data.begin(), data.end());
+```
+
+.N[
+It is a common property of all algorithms that a container is specified by a
+pair of iterators.
+]
+
+---
+template: plain
+name: stl_algorithms
+header: #### Output to Containers
+
+Some algorithms allow to store their output in another container. Often a
+"cookbook"-style approach makes sense:
+```
+int arr[100];
+… // fill in n elements
+std::vector<int> data;
+std::unique_copy(&arr[0], &arr[n], std::back_inserter(data));
+```
+
+---
+template: plain
+name: inside_algorithms
+header: #### Algorithms – A Look Inside
+
+To really understand STL algorithms it makes sense to have a short look on the
+implementation of a typical example:._[]
+
+```
+template<typename InIt, typename OutIt, typename Pred>
+OutIt filter(InIt from, InIt upto, OutIt dest, Pred pred) {
+    while (from != upto) {
+        if (pred(*from))
+            *dest++ = *from;
+        ++from;
+    }
+    return dest;
+}
+```
+
+.N[
+An algorithm like this is available as `std::copy_if` since C++11.._[]
+]
+
+.F[:
+In C++98 it seemed to be missing but what you can do with `std::copy_if` was
+already possible with `std::remove_copy_if` and the predicate negated, so
+`filter` from above might also be implemented as:
+```
+  template<typename InIt, typename OutIt, typename Pred) {
+OutIt filter(InIt from, InIt upto, OutIt dest, Pred pred) {
+    return std::remove_copy_if(from, upto, dest, [pred](const auto& e) {return !pred(e);});
+    //          so that you don't miss the important thing - it's HERE --------^
+}
+```
+]
+---
+template: plain
+name: stl_algorithms
+header: #### Specifying Predicates
+
+There are many algorithms like `filter` requiring a predicate,
+e.g.:._[]
+```
+// count all elements in `arr` with positive values:
+bool gt_zero(int x) { return (x > 0); }
+…
+auto n = count_if(&arr[0], &arr[n], gt_zero);
+```
+
+The basic technique is always the same:
+```
+// copy all non-zero elements from `arr` to `data`:
+bool non_zero(int x) { return (x != 0); }
+…
+filter(&arr[0], &arr[n], std::back_inserter(data), non_zero);
+```
+
+.F[:
+While the above example code uses classic functions an alternative technique in
+widespread use would define the predicate as *Function Object* (or *Functor* in
+short):  
+```
+  // note object construction by appending `()` when the functor's type is used further below!
+struct GtZero { bool operator()(int x) { return (x > 0); }};
+struct NonZero { bool operator()(int x) { return (x != 0); }};
+…
+auto n = count_if(&arr[0], &arr[n], GtZero());    // or GtZero{} or NonZero{}  with C++11
+filter(&arr[0], &arr[n], std::back_inserter(data), NonZero()); // uniform initialization
+```
+]
+
+---
+template: plain
+name: cpp11_lambdas
+header: #### C++11 Lambdas
+
+[Lambdas]: http://en.wikipedia.org/wiki/Anonymous_function
+
+Introducing [Lambdas] with C++11 was a major step to bring C++ at level with
+many other modern programming languages, in which
+
+* functions not only were made *"First Class Citizens"* but
+
+* it is also possible to specify a function body **at its point of use**,._[]
+  especially as argument to some other function call.
+
+.F[:
+This is why lambdas are also known as *Function Literals*.
+]
+
+.N[
+The general definition syntax
+
+* starts with a capture list in square brackets,
+
+* followed by an argument list in round parenthesis,
+
+* followed by the function body in curly braces.
+]
+
+---
+template: plain
+name: lambda_definition_syntax
+header: ##### Lambda 101 – Definition Syntax Example
+
+For the `filter` algorithm the predicate could be supplied directly and clearly
+visible at the call site:
+```
+std::vector<double> data, result;
+… // fill data
+filter(data.begin(), data.end(), std::back_inserter(result),
+       [](double e) { return (e < std::sqrt(2.0)); }
+};
+```
+
+.N[
+Note that the above will work with either version of `filter`, the one with the
+[predicate parametrized to any type](#inside_algorithms) and the one with the
+[predicate limited to an appropriate callable](#std_function_example_1).
+]
+
+---
+template: plain
+name: lambda_definition_syntax
+header: ##### Lambda 101 – Argument Lists
+
+The argument list and return value of a Lambda must always be compatible with
+the expectations of the caller.
+
+* Typically algorithms with a predicate argument hand over a container element
+  as argument and expect a boolean return value.
+
+* Most notable exceptions are algorithms expecting, establishing or maintaining 
+  a sort order:
+  * such hand over two container elements as argument and
+  * expect `true` as return value if – for proper sort order – the first
+    argument is to be placed before the second.
+
+```
+std::vector<double> data;
+…
+// sort doubles ascending (= default)
+std::sort(data.begin(), data.end());
+…
+// sort doubles descending
+std::sort(data.begin(), data.end(),
+         [](double e1, double e2) { return (e2 < e1); });
+```
+
+---
+template: plain
+name: lambda_definition_syntax
+header: ##### Lambda 101 – Named Lambdas
+
+While for more complex tasks a named function or functor is preferable for
+readability and maintainability, named lambdas are also worth a consideration
+as their point of definition can be close to their use:
+```
+…
+// sort doubles by their absolute values
+auto fabs_cmp = [](double e1, double e2) {
+                    return (std::fabs(e1) < std::fabs(e2));
+                };
+…
+std::sort(data.begin(), data.end(), fabs_cmp);
+```
+
+.N.center[
+This is not limited to lambdas used only one time.._[]
+]
+
+.F[:
+If named lambdas are written for potential reuse it also makes sense to strive
+for a more generic solution. C++14 allows using `auto` as argument type:
+```
+  // sort pairs by member `first` or `second`:
+auto cmp_by_first = [](const auto& e1, const auto& e2) { return (e1.first < e2.first); };
+auto cmp_by_second = [](const auto& e1, const auto& e2) { return (e1.second < e2.second); };
+…
+std::sort(data.begin(), data.end(), cmp_by_first);
+std::stable_sort(data.begin(), data.end(), cmp_by_second);
+```
+]
+
+---
+template: plain
+name: lambda_capture_list
+header: ##### Lambda 101 – Capture Lists (Motivation)
+
+To emphasize that important point once more: for any function (e.g. `filter`) 
+expecting some other function as argument,
+
+* the lambda handed over by the caller (e.g. *as argument to* `filter`)
+* must be callable by the code inside (i.e. *the implementation of* `filter`).
+
+Therefore it is not possible to hand over additional arguments directly:
+```
+void foo(std::vector<int> data, std::list<int> result, int max) {
+    filter(data.begin(), data.end(), std::back_inserter(result),
+           [](int e, int max) { return (e < max); });
+};
+```
+
+.W[
+This code will not compile._[] because the lambda doesn't match the expectation
+`filter` has about its fourth argument.._[]
+]
+
+.F[:
+How the error manifests in a compiler diagnostic is a different issue: for a
+fully generic template the compiler will typically give a diagnostic for the
+location where the actual call occurs and also point to the code by which that
+particular instantiation was caused.
+]
+
+---
+template: plain
+name: lambda_capture_list_example
+header: ##### Lambda 101 – Capture List Example
+
+In a capture list variables from the local context are named.
+
+Then in the code generated for the lambda that argument is transferred via a
+special path:._[]
+```
+void foo(std::vector<int> data, std::list<int> result, int max) {
+    filter(data.begin(), data.end(), std::back_inserter(result),
+           [max](double e) { return (e < max); }
+    );
+}
+```
+
+.F[:
+If you are curious about that path you will get an idea when
+[Classic C++ Function Objects](#function_objects) are covered.
+]
+
+So far this presentation only tried to give some first clues about the purpose
+and basic use of lambda capture lists.
+
+.N[
+There are many more details which have not been covered yet, like handing over
+references in the capture list or some shortcuts for it.
+]
+
+Please lookup more information in the relevant reference documentation.
+
+---
+template: plain
+name: lambda_capture_list_pitfalls
+header: #### Beware of the Pitfalls with Lambdas
+
+There are two broad categories of pitfalls:
+
+* Not being aware of the fact that algorithms have the freedom to make a
+  copy of a lambda, also copying its local data.
+
+* Initializing a reference in a long-living lambda with a short(er)-living
+  object instance or basic variable.
+
+As in both cases the program will not come to the expected result,
+inadvertently making a copy usually cause less harm.
+
+.W[
+Via dangling references unrelated memory locations may be accessed and even
+modified, sometimes causing no effect until long after the fact.
+]
+
+---
+template: plain
+name: function_objects
+header: #### Classic C++ Function Objects
+
+Before C++11 introduced lambdas *Function Objects* or *Functors*._[] were the
+way to go, if besides the arguments passed by the caller additional information
+had to be passed to a piece of callable code.
+```
+class IsBelow {
+    int max;
+public:
+    IsBelow(int m) : max(m) {}
+    bool operator()(int m) const { return (e < max); }
+};
+…
+void foo(std::vector<int> data, std::list<int> result, int max) {
+    filter(data.begin(), data.end(), std::back_inserter(result),
+           IsBelow(max));
+}
+```
+
+---
+template: plain
+name: type_generic_functors
+header: #### Type Generic Functors
+
+Note that also Functors can be made type generic:
+```
+template <typename T>
+class IsBelow {
+    T max;
+public:
+    IsBelow(T m) : max(m) {}
+    bool operator()(T m) const { return (e < max); }
+};
+```
+
+This is rawly equivalent to `auto` arguments in lambdas, though there still
+needs to be a type argument:._[]
+```
+void foo(std::vector<int> data, std::list<int> result, int max) {
+    filter(data.begin(), data.end(), std::back_inserter(result),
+           IsBelow<int>(max));
+}
+```
+
+.F[:
+This is expected to be alleviated in C++20.
+Until the following helper function may come in handy:  
+`template<typename T> IsBelow<T> gIsBelow(T v) { return IsBelow<T>(v); }`  
+What turns the call of `filter` into:  
+`filter(data.begin(), data.end(), std::back_inserter(result), gIsBelow(max));`
+]
+
+---
+template: plain
+name: local_context_ref_functors
+header: #### Local Context by Reference (Functors)
+
+Both, [Lambdas](#cpp11_lambdas) and [Functors](#function_objects) provide ways
+to access variables from the local context by reference.
+
+What needs to happen behind the scene is obvious in a functor:
+```
+template<typename T>
+class PrintEnumerated {
+    std::ostream& os;
+    int& num;
+public:
+    PrintEnumerated(std::ostream& o, int& n) : os(o), num(n) {}
+    void operator()(const T& e) { os << n++ << '\t' << e << '\n'; }
+};
+…
+void foo(std::vector<int> data, std::ostream output) {
+int lnum = 1;
+std::foreach(data.cbegin(), data.cend(),
+             PrintEnumerated<int>(output, lnum));
+}
+```
+
+… but much of the code (adding the necessary members and a constructor
+forwarding its arguments) is just boiler-plate.
+
+---
+template: plain
+name: local_context_ref_lambdas
+header: #### Local Context by Reference (Lambdas)
+
+A lambda makes the code more succinct and to the point:._[]
+```
+void foo(std::vector<int> data, std::ostream &output) {
+    int lnum = 1:
+    std::foreach(data.cbegin(), data.cend(),
+                [&output, &lnum](int e) {
+                    output << ++lnum << '\t' << e << '\n';
+                });
+}
+```
+
+.F[:
+The code could be made even more compact by abbreviating the capture list to a
+single `&`:  
+`[&](int e) { output << lnum++ << ":\t" << e; }`
+]
+
+---
+template: plain
+name: generalized_callables
+header: ## Generalized Callables
+
+Summarizing there as three forms of callable code:
+
+* Classic C function pointers
+
+* C++ Callable Objects._[] aka. Functors
+
+* Lambdas introduced in C++11
+
+All three are different types and hence can only vary if specified directly
+or indirectly through a template argument.
+
+.N.center[
+The template `std::function` provides a common wrapper.
+]
+
+Argument and result types need to be to be fixed, though –
+* callables need not match exactly,
+* only within the limits of the standard conversions,  
+  (as are supplied for any direct function call too).
+
+.F[:
+An object is *callable* if after any of its instances a pair of parentheses
+enclosing an (optionally empty) argument is acceptable. This is achieved by
+overloading `operator()`. **Note that in its definition the formal argument
+list is supplied inside an extra set of parenthesis.**
+]
+
+---
+template: plain
+name: use_of_callables
+header: ### Use of Callables
+
+There are two main applications:
+
+* Replacing a fully general template argument for an internal variation of some
+  algorithm via an argument.
+
+  * Usually this trades in a loss of runtime performance for a smaller memory
+    footprint.
+  * It also allows the compiler to give better error messages when the call
+    is malformed.
+<!-- -->
+
+* When a variable (or a container) needs to refer to the actual code.
+
+  * This could be call-backs in asynchronous (message based) designs, or
+  * some loose coupling of encapsulated software components._[]
+
+.F[:
+In the world of design patterns this is also known as *Publisher-Subscriber*.
+]
+
+---
+template: plain
+name: std_function_example_1
+header: ##### First Code Example with `std::function` 
+
+This example shows how a predicate specified as fully generic type (though of
+course bounded by its use) …
+```
+template<typename T, P>
+std::size_t count_value_if(const std::vector<T> data, P pred) {
+    std::size_t result = 0;
+    for (auto e : data)
+        if (pred(e)) ++result;
+    return result;
+}
+```
+
+… can be replaced with an `std::function`-type argument:
+```
+template<typename T>
+std::size_t count_value_if(const std::vector<T> data,
+                           std::function<bool(int)> pred) {
+    // … same as before
+}
+```
+
+The difference shows in the generated code but becomes even more obvious in the
+error messages in case the actual callable has an incompatible signature.
+         
+---
+template: plain
+name: std_function_example_2
+header: ##### Second Code Example with `std::function`
+
+The following example demonstrates a bare-bones implementation of a
+communication scheme in the spirit of the publisher-subscriber pattern:
+```
+struct slot_call : std::vector<std::function<void(const char*)> {
+public:
+    void operator()(const char *arg) const {
+        for (const auto &fnc : *this) fnc(arg);
+    }
+};
+```
+
+The intended use is like this:
+```
+slot_call sc;                 // publisher object defined here
+…  
+                              // subscribers register handlers
+sc.push_back([](const char* s) { /* ... like here ... */ });
+sc.push_back([](const char* s) { /* ... and there ... */ });
+…
+while (auto cp = get_events()) // then publisher listens to ...
+    sc(cp);                    // ... and distributes events
+```
+
+---
+template: plain
+name: use_of_callables
+header: #### `std::function` Performance Considerations
+
+When `std::function` is involved all **actual calls** will typically take place
+via pointer indirection.
+
+.center[
+.N[
+A call via `std::function` is comparable to a `virtual` member function.
+]
+
+If alternative implementations are possible, the rule of thumb is this:
+]
+
+.pull-left[
+
+* An `std::function`-type, i.e. a callable *bound in its definition* to a fixed
+signature, tends to
+
+  * generate **less**
+  * but **slower** code.
+]
+
+.pull-right[
+
+* A generic templated type, only bounded *by its use as callable*, tends to
+
+  * generate **more**
+  * but **faster** code.
+]
+
+---
+template: plain
+name: std_bind_vs_lambdas
+header: ### `std::bind` vs. Lambdas
+
+Lambdas are also useful to adapt more generic functions to a specific use.
+
+This may be any or a combination of
+
+* binding one or more arguments to fixed values
+* binding arguments in a different order.
+
+The following examples assumes a
+
+* `drawing` composed of
+* `point`s and taking a
+* `pen` to create a visual representation:
+
+```
+struct point { int x, y; };
+struct drawing : private std::vector<point> {
+    using pen_t = std::function<void(double x, double y)>;
+    void draw(pen_t pen) {
+        for (const auto pt : *this) pen(pt.x, pt.y);
+    }
+};
+```
+
+---
+template: plain
+name: std_bind_example
+header: ##### Code Example with `std::bind`
+
+Further assuming there is the following function
+```
+void my_test_pen(std::ostream& os, int yc, int xc) {
+    os << "x= " xc << ", y=" << yc << '\n';
+}
+```
+which is not exactly but close to the expected `pen`.
+
+```
+drawing d = {{0,1}, {3,7}, {4,6}, {1,1}, {0,1}};
+…
+using namespace std::placeholders;
+d.draw(std::bind(my_test_pen, std::ref(std::cout), _2, _1));
+```
+
+Alternatively a lambda may be used:._[]
+```
+d.draw([](int x, int y) { my_test_pen(std::cout, y, x); });
+```
+
+.F[:
+Note that `std::cout` is a global object instance and therefore directly
+available in a lambda body. If the stream to use would come from a local
+variable or function parameter `std::ostream os` and the lambda arguments were
+renamed to `_1` and `_2`, the comparison would come even closer:  
+`d.draw(std::bind(my_test_pen, std::ref(os), _2, _1));` vs.  
+`d.draw([&os](int _1, int _2) { my_test_pen(os, _2, _1); });`
+]
+
+---
+template: plain
+name: more_pitfalls_with_callables
+header: #### More Pitfalls with Callables
+
+A general pitfall when using callables returned from `std::bind` or created
+with lambdas is that C++ has no garbage collection.
+
+.W[
+Especially if the callables are handed over back and forth, the code must be
+carefully designed and should be reviewed with life-time issues in mind!
+]
+
+This was (obviously?) not the case for the following two fragments.._[]
+
+.pull-left[
+Houston, we have a problem …
+
+```
+void g(std::ostream&, int);
+…
+std::function<void(int)> f() {
+    using namespace std;
+    using placeholders::_1;
+    ostringstream os;
+    return bind(g, ref(os), _1);
+}
+```
+]
+
+.pull-right[
+… similar over here:
+```
+void g(std::ostream&, int);
+…
+std::function<void(int)> f() {
+    std::ostringstream os;
+    return [&os](int x) {
+                g(os, x);
+           };
+}
+```
+]
+
+.F[:
+So that the problem manifests itself there must of course be a call like this:
+`f()(42);`
+]
+
+---
+template: plain
+name: cpp11_library_extensions
+header: ## Library Extensions since C++11
+
+This section summarizes some important extensions of the C++ standard
+library introduced with C++11, C++14, and C++17.
+
+-------------------------------------------------------------------------------
+
+* [Durations, Time Points, and Clocks			](#std_chrono)
+* [Pseudo Random Numbers (and Distributions)		](#std_random)
+* [Regular Expressions					](#std_regex)
+* [Ad-hoc Data Structures: `std::tuple`			](#std_tuple)
+* [Run-Time Checked Generic Pointer: `std::any`		](#std_any)
+* [Single-Element Containers: `std::optional`		](#std_optional)
+* [Type-Tracking Unions: `std::variant`			](#std_variant)
+
+-------------------------------------------------------------------------------
+
+---
+template: plain
+name: std_chrono
+header: ### Durations, Time Points, and Clocks
+
+C++11 introduced a set of new classes in the sub-namespace `std::chrono` to
+abstract
+
+* Time Points and
+* Durations.
+
+As for some similar libraries operators are overloaded for meaningful
+operations only.
+
+E.g. you may:
+
+* add or subtract a durations to/from a duration
+* multiply or divide a duration with/by a (dimensionless) numbers
+* divide a duration by a duration (yielding a dimensionless number)
+* add or subtract a duration to/from a time point (yielding a time point)
+* subtract a time point from a time point (yielding a duration)
+
+But you may **not**:
+
+* mix durations and time points in any other operation but subtraction
+* mix time points and dimensionless numbers in **any** operation
+
+---
+template: plain
+name: std_chrono_durations
+header: ##### Duration Example
+
+While a generic template allows to specify a *Duration Type* in detail, most
+often some predefined type (based on the generic template) is used.
+
+The following example may help to understand the most basic use:
+
+.pull-left[
+```
+namespace sc = std::chrono;
+…
+auto dur = sc::hours(3)
+         + sc::minutes(17)
+         + sc::seconds(12);
+```
+]
+
+.pull-right[
+Here the variable `dur`
+
+* is determined to have type._[]
+  `std::chrono::seconds`
+* with the (initial) value  
+  `3*3600 + 17*60 + 12` (= 4632).
+]
+
+Via *Overloading Suffix Operators* C++14 simplified this further (see
+also http://en.cppreference.com/w/cpp/symbol_index/chrono_literals):
+```
+using namespace std::chrono_literals;
+…
+auto dur = 3600h +17min + 12s;
+```
+
+.F[:
+This reveals another aspect of the elegant design: Template Meta-Programming is
+used in the implementation so that a combination of different duration types
+always will chose a result type according to the operand with the
+finest-grained resolution (which is seconds here).
+]
+
+---
+template: plain
+name: std_chrono_clocks
+header: ##### Clock Example
+
+*Time Points* often involve using a *Clock* to get the current time.
+
+C++11 requires the following three clocks as a minimum._[] (see also
+http://en.cppreference.com/w/cpp/chrono#Clocks):
+
+* `std::chrono::system_clock`
+* `std::chrono::monotonic_clock`
+* `std::chrono::high_resolution_clock`
+
+Measuring the execution time of some piece of code could basically be done as
+shown here:
+```
+namespace sc = std::chrono;
+const auto start = sc::high_resolution_clock::now();
+…
+… // code to time
+…
+const auto end = sc::high_resolution_clock::now();
+using show_duration_ms = sc::duration<double, std::ratio<1, 1000>>;
+std::cout << show_duration_ms(end-start) << "ms" << std:::endl;
+```
+
+.F[:
+Implementations are free to extend this, e.g. standard conforming
+[Boost.Chrono] adds clocks running only when the current process uses the CPU,
+allowing to measure CPU load instead of real-time.
+]
+
+[Boost.Chrono]: http://www.boost.org/doc/libs/release/doc/html/chrono.html
+
+---
+template: plain
+name: std_random
+header: ### Pseudo Random Numbers
+
+For compatibility with C the following simple approach still works:
+
+* generate random numbers with `rand()`,
+* eventually after seeding the generator with `srand()`
+
+The new design in C++ separated parating (random) generators from
+distributions, so throwing "a fair dice" requires this:._[]
+```
+int dice() {
+    static std::default_random_engine random_roll{};
+    static std::uniform_int_distribution<int> one_to_six{1, 6};
+    return one_to_six(random_roll);
+}
+```
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/numeric/random
+]
+
+.F[:
+While having some more lines of code it avoids the well-known deficiencies of
+classic much simpler approach `std::rand()%6 + 1`: the sometines very short
+cycle until repetition (with 100% predictability then) and the tendency to
+prefer the smaller values because of truncation with the modulo operator.
+]
+
+---
+template: plain
+name: std_regex
+header: ### Regular Expressions
+
+The following fragment shows how to break down an `std::string` assumed to hold
+a currency content formatted
+
+* with full Euros into "3-digit groups" separated by dots
+* and Eurocents optional, separated by a comma if present:._[]
+
+```
+bool euro_parser(const std::string& str, double& ec) {
+    std::regex re{R"(([1-9]\d{0,2}(?:\.\d{3})*),(\d{2}))"};
+    std::smatch m;
+    if (!std::regex_match(str, m, re))
+        return false;
+    const std::string es{m[1].str()};
+    ec = std::stod(std::regex_replace(es, std::regex{"\\."}, ""))
+       + std::stod(m[2].str())/100.0;
+    return true;
+}
+```
+.N.center[
+The topic is only covered further when asked for.  
+Then some more overview can follow based on the  
+[Infographic "C++11 Regular Expression API"](#cpp11_regex_api) in the appendix.
+]
+
+.F[:
+The regular expression has a minor bug which shows for amounts of under 1€.
+]
+
+---
+template: plain
+name: std_tuple
+header: ### Ad-hoc Data Structures: `std::tuple`
+
+The data type `std::tuple` supports to combine usually separate pieces of
+information into a single unit without requiring to define a specific `struct`
+or `class`.
+
+.pull-left[
+A tuple can be
+
+* constructed,
+* filled,
+* accessed, and
+* unpacked
+
+in several ways, furthermore …
+]
+
+.pull-right[
+<!-- -->
+
+.N.center[
+It is also possible to  
+**process an `std::tuple`  
+element by element**  
+at compile time
+]
+
+… using the techniques of  
+*Template Meta-Programming*.
+]
+
+Except for the Meta-Programming aspect an  `std::tuple` is an extension of
+`std::pair` (from C++98) and there are also conversions between both.
+
+.I[
+For more information see:
+http://en.cppreference.com/w/cpp/tuple)
+]
+
+---
+template: plain
+name: std_tuple
+header: #### `std::tuple` Typical Implementation
+
+Behind the scenes `std::tuple` is implemented using compile-time recursion, but
+this is invisible for the users.
+
+.N[
+Generally speaking:
+
+There is no reason why an `std::tuple` should have a
+
+* larger memory footprint or
+* worse runtime performance
+
+compared to a `struct` holding the same data members.
+]
+
+In practice this means:
+
+* there **may or may not** be substantial differences if a program replaces
+  small "one-time use" data structures by `std::tuple`-s;._[]
+* the memory layout of **may or may not** be binary-compatible with an
+  equivalent `struct`.
+
+.F[:
+The C++11 standard does not specify any guarantee so this is rather a
+*"Quality of Implementation"* (= QOI) Issue. The free [Compiler Explorer] in
+the Internet may be useful to find out more …
+]
+
+[Compiler Explorer]: http://www.godbolt.org
+
+---
+template: plain
+name: std_tuple
+header: ##### `std::tuple` Example
+
+Some examples for using an `std::tuple` are following. They are based on the
+`euro_parser` function shown before and combine two informations in the value
+returned:
+
+* a `bool` indicating whether a conversion was possible
+* a `double` holding the converted amount
+
+While the modifications to the [original `euro_parser`](#std_regex) are not
+that substantial, it is shown once more in completion here:._[]
+```
+auto euro_parser(const std::string& str) {
+    using namespace std;
+    regex re{R"((0|[1-9]\d{0,2}(?:\.\d{3})*),(\d{2}))"};
+    smatch m;
+    if (!regex_match(str, m, re))
+        return make_tuple(false, 0.0);
+    const auto es{m[1].str()};
+    const auto ec = stod(regex_replace(es, regex{"\\."}, ""))
+                  + stod(m[2].str())/100.0;
+    return make_tuple(true, ec);
+}
+```
+
+.F[:
+Note that also the problem with the original regular expression has been fixed
+here.
+]
+
+---
+template: plain
+name: std_tuple
+header: ##### `std::tuple` Example (2)
+
+Also the new C++11
+[suffix return type syntax](http://en.cppreference.com/w/cpp/language/function)
+may be tried if the long-winded return type specification preceding the
+function name and argument list is found to be distracting:
+```
+auto euro_parser(const std::string& str)
+    -> std::tuple<bool, double> {
+    … // as before
+}
+```
+
+Since C++14 the type value will be deduced from the return statement, so the
+function return type can be omitted if the return statements are modified to use
+
+* either the tuple constructor explicitly …
+  * `return tuple<bool, double>{false, 0.0};`
+  * `return tuple<bool, double>{true, ec};`
+
+<!-- -->
+
+* … or the factory function for tuples:
+  * `return make_tuple{false, 0.0};`
+  * `return make_tuple{true, ec};`
+
+---
+template: plain
+name: std_tuple
+header: ##### `std::tuple` Example (3)
+
+On the receiving end the tuple must be stored and unpacked:
+```
+std::string input;
+…
+const auto result = euro_parser(input);
+if (std::get<0>(result)) // branch based on success
+    … std::get<1>(result) … // access amount
+else
+    …                       // conversion failed
+```
+
+Since C++14 members of a tuple can also be accessed by their type name (if
+unique inside the tuple);
+```
+if (std::get<bool>(result))
+    … std::get<double>(result) …
+else
+    …
+```
+
+---
+template: plain
+name: std_tuple
+header: ##### `std::tuple` Example (4)
+
+Alternatively unpacking can be done with `std::tie`:
+
+```
+bool success;
+double euro;
+std::tie(success, euro) = euro_parser(input);
+if (success) {
+    … // conversion ok, amount found in `euro`
+else
+    … // (invalid input format)
+```
+
+If not all members of a tuple are of interest, a tie can also be done only
+partially, e.g. if only a validity check of the input format is desired …
+```
+bool success;
+std::tie(success, std::ignore) = euro_parser(input);
+```
+
+… or if a zero-amount of is acceptable to indicate a failed conversion:
+```
+double euro;
+std::tie(std::ignore, euro) = euro_parser(input);
+if (euro != 0.0) … // conversion ok, amount found in `euro`
+```
+
+---
+template: plain
+name: std_optional
+header: ### Single-Element Containers: `std::optional`
+
+This class, introduced in C++17,._[] offers a simple standard way to add a
+"validity flag" to any kind of value.
+
+.N[
+A typical use case for `std::optional` is to indicate the *"not valid"* or
+*"not (yet) initialized"* state for a type that uses all bit patterns of its
+binary representation so that there is no special value left to serve as
+sentinel.
+]
+
+E.g. a function to convert a character string into a numeric value could use
+an `std::optional<int>` as return value to indicate a failed conversion.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/utility/optional
+]
+
+.F[:
+Prior to this it was introduced in the C++ in 2015 with the
+[Library Fundamentals TS](http://en.cppreference.com/w/cpp/experimental/lib_extensions)
+as `std::experimental::optional` and before was available since long as
+[Boost.Optional](http://www.boost.org/doc/libs/release/libs/optional/doc/html/index.html).
+]
+
+---
+template: plain
+name: std_optional_implementation
+header: #### `std::optional` Typical Implementation
+
+An object of type `std::optional<` *`T`* `>` locates its payload (*`T`*) in
+proximity with a validity flag
+
+* on the stack,
+* at a static address,
+* or on the heap
+
+just as it would be the case for any ordinary object or base type variable.
+
+---
+template: plain
+name: std_optional_example
+header: ##### `std::optional` Example
+
+In the `euro_parser` it could have been used as return value too:
+```
+auto euro_parser(const std::string& str)
+    -> std::optional<double> {
+    std::regex re{R("([1-9]\d{0,2}(?:\.\d{3})*),(\d{2}))"};
+    std::smatch m;
+    if (!std::regex_match(str, m, re))
+        return {};
+    const std::string es{m[1].str()};
+    return std::stod(std::regex_replace(es, std::regex{"\\."}, ""))
+         + std::stod(m[2].str())/100.0;
+}
+```
+
+---
+template: plain
+name: std_optional_example_2
+header: ##### `std::optional` Example (2)
+
+There is a default `bool`-conversion to check validity while accessing the
+payload will be done with the `get` member function:
+```
+…
+if (auto result = euro_parser(input)) {
+    …
+    … result.get() … // access converted amount
+    …
+}
+else {
+    …                // conversion failed
+}
+```
+
+---
+template: plain
+name: std_optional_use_cases
+header: #### More Use Cases for `std::optional`
+
+Besides marking the validity of a returned value there are some more typical
+use cases:
+
+* clearly indicate the difference between
+  * variables not yet initialized and
+  * variables to which a value has been assigned
+
+* for function arguments support true "out"-parameters
+
+To illustrate the latter, consider this:._[]
+```
+void f(const T1& in_only, T2& in_out, std::optional<T3>& out_only) {
+    … in_only …; // `const` reference enforces read-only access
+    … ++in_out …; // non-`const` reference allows modification
+    out_only = T3{ … , … }; // assign (new) value as necessary
+}
+```
+
+.F[:
+At first glance this example may seem over-engineered – shouldn't an ordinary
+(non-`const`) reference `T3&` suffice as `out_only` argument? Most often this
+may be true or make no difference, but using an `std::optional<T3>&` may still
+have a real advantage if there is no reasonable way to construct the receiving
+argument variable before. And even if there is, it may be inefficient to first
+construct something only to have it overwritten soon after.
+]  
+
+---
+template: plain
+name: std_any
+header: ### Generic Pointers with Runtime-Checking): `std::any`
+
+This class, introduced in C++17,._[]) offers an efficient replacement for
+generic, **un-typed** pointers (`void *`).
+
+This is especially true if
+
+* the type of such pointers needs to be tracked anyway, to apply
+* a type-cast for accessing the pointed to object beyond the bit-level.
+
+.N[
+A typical use case for `std::any` is in layered software architecture where
+some "middle" layer strives to reduce dependencies.
+]
+
+E.g. generic communication service may want to be "agnostic" with respect to
+a set of types well-known at the more special data collecting, processing,
+and presentation layers, for which it provides the connection.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/utility/any
+]
+
+.F[:
+Prior to this it was introduced in the C++ in 2015 with the
+[Library Fundamentals TS](http://en.cppreference.com/w/cpp/experimental/lib_extensions)
+as `std::experimental::any` and before was available since long as
+[Boost.Any](http://www.boost.org/doc/libs/release/libs/any/doc/html/index.html).
+]
+
+---
+template: plain
+name: std_any_implementation
+header: ### `std::any` Typical Implementation
+
+As the maximum payload cannot be known at compile time, `std::any` needs to use
+heap allocation – al least as a fall back for the general case.._[]
+
+The **space overhead** beyond the payload and the access pointer is
+
+* a type discriminator, and
+* some heap management data.
+
+(The latter is often shared between a number of heap objects and so cannot be
+easily attributed to a single object.)
+
+The **runtime overhead** is that of an pointer plus some
+
+  * validity checking for retrieval, and
+  * some resizing heap operations for content type changes.
+
+(Validity checks for retrieval include returning an error indication if the
+actual and the expected content type differ.)
+
+.F[:
+The programming interface does not exclude some kind of [SOO] (= Small Object
+Optimization) being used behind the scenes, similar to what is often found in
+`std::string` implementations on machines with large (64 bit) word size.
+]
+
+[SOO]: http://www.codeday.top/2017/08/26/35574.html 
+
+---
+template: plain
+name: std_any_example
+header: ##### `std::any` Example
+
+```
+std::any v; // `v` may later hold any (moveable or copyable) type
+```
+Assuming the above and everything required to be done when storing new content
+is hidden in an overloaded assignment operator,._[] then
+
+.pull-left[
+```
+v = 42;
+```
+… assigns an `int` …
+]
+.pull-right[
+```
+v = std::string("hello");
+```
+… as easily as an `std::string`.
+]
+
+While the default c'tor (without arguments) puts the `std::any` in an
+"empty" state, a value may also be assigned on construction, so …
+
+.pull-left[
+```
+std::any v2{42};
+```
+… initializes a value of type `int` …
+]
+.pull-right[
+```
+std::any v3{"hello"};
+```
+… or type `const char *`.
+]
+
+.F[:
+The final specification according to C++17 has slightly modified and enhanced
+the programming interface originating from [Boost.Any] mainly to allow
+optimizations when *Moving* is cheaper than *Copying*.
+]
+
+[Boost.Any]: http://www.boost.org/doc/libs/release/doc/html/any.html
+
+---
+template: plain
+name: std_any_example_2
+header: ##### `std::any` Example (2)
+
+Furthermore the `std::any` member function
+
+* `reset` puts it back to the "not initialised/assigned" state, and
+* `has_value` may be used to test for that particular state.
+
+The more interesting part is how content is accessed.
+
+.N.center[
+On each retrieval the expected content type needs to be specified.
+]
+
+There are two forms which differ in their failure indication, i.e. if the
+current content type is different from the expressed expectation.
+
+---
+template: plain
+name: std_any_example_3
+header: ##### `std::any` Example (3)
+
+The first technique indicates failure by throwing an exception of type
+`std::bad_any_cast` and applies when
+
+* at a given point in the flow of program execution there is only one valid
+  content type, and
+
+* everything else would be a programming error requires fixing (or maybe some
+  kind of soft recovery strategy).
+
+```
+try { // expecting `v` contains a `double` number
+    …
+    … std::any_cast<double>(v) … // retrieve and process
+    …
+}
+catch (std::bad_any_cast& ex) { // `v` contains anything else
+    … 
+}
+```
+.N[
+Of course, if nothing can (or needs) to be done at that point the exception
+should simply be let propagate down the call stack.
+]
+
+---
+template: plain
+name: std_any_example_4
+header: ##### `std::any` Example (4)
+
+The second technique explicitly tests for in a series._[] for content types:
+
+.N.center[
+Note the `any_cast` here is applied to **`&`**`v` (address of `v`) instead of plain `v`.
+]
+```
+…
+if (!v.has_value()) {
+    … // handle the "empty" case
+}
+else if (auto p = std::any_cast<int>(&v)) {
+    … *p … // refers to contained `int` value
+}
+else if (auto p = std::any_cast<double>(&v)) {
+    … *p … // refers to contained `double` value
+}
+else if (auto p = std::any_cast<MyClass>(&v)) {
+    … *p …(or)… p-> … // refers to contained `MyClass` instance
+}
+…
+```
+A final else may provide a default (without retrieval) or indicated failure.
+
+.F[:
+The chain may be run-time optimized by ordering the tests according to probability.
+]
+
+---
+template: plain
+name: std_variant
+header: ### Type-Tracking Unions: `std::variant`
+
+This class, introduced in C++17,._[] offers an efficient replacement for
+overlay-types like C-style `union`-s.
+
+This is especially true if
+* the currently held content-type needs to be tracked by the program logic
+  anyway,
+* to select the correct member before the content can be accessed (other than
+  just at the bit-level).._[]
+
+.N[
+A typical use case for `std::variant` are containers holding a bounded set of
+element types as content.
+]
+
+The advantage over `std::any` is that the "type-aware" parts of the system can
+be checked for completeness at compile-time, helping to diagnose problems early
+if the list of types to support grows.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/utility/variant
+]
+
+.F[:
+Prior to this it was introduced in the C++ in 2015 with the
+[Library Fundamentals TS](http://en.cppreference.com/w/cpp/experimental/lib_extensions)
+as `std::experimental::variant` and before was available since long as
+[Boost.Variant](http://www.boost.org/doc/libs/release/libs/variant/doc/html/index.html).
+]
+
+---
+template: plain
+name: std_variant_implementation
+header: ### `std::variant` Typical Implementation
+
+As the maximum payload is known at compile time, `std::variant` can use stack
+or fixed-address allocation.
+
+The **space overhead** beyond the payload is
+
+* a type discriminator, **plus**
+* the size difference between the actual and the largest payload.
+
+(So, if there is a vast size difference of payloads and the largest one is only
+rarely used, `std::any` might be the better choice.)
+
+The **runtime overhead** is that of
+
+  * some validity checking for retrieval, and
+  * a d'tor call for the current type when assigning a different one.._[]
+
+(It is arguable whether the latter should be considered as an overhead
+because every instance of a class needs to be destructed at sometime.)
+
+.F[:
+If such an assignment can fail the `std::variant` will not provide
+[Strong Exception Safety](http://en.cppreference.com/w/cpp/language/exceptions#Exception_safety)
+but instead leave the instance in a "value-less state", which can be tested for
+with the `valueless_by_exception()` member function.
+]
+
+---
+template: plain
+name: std_variant_example
+header: ##### `std::variant` Example
+
+The set of types that can be stored in a variant is called "bounded" because it
+is fixed at compile-time …
+
+```
+std::variant<bool, float, std::string> v; // `v` may hold a `bool`
+                                          //     OR a `float`
+                                          //     OR an `std::string`
+```
+Assuming the above and everything required to be done when storing new content
+is hidden in an overloaded assignment operator,._[] then
+
+.pull-left[
+```
+v = 4.0f;
+```
+(assigns a `float`)
+]
+.pull-right[
+```
+v = std::string("hello");
+```
+(assigns to `std::string`)
+]
+
+Due to automatic type conversions also the following works:
+
+.pull-left[
+```
+v = 4;
+```
+]
+.pull-right[
+```
+v = "hello";
+```
+]
+
+---
+template: plain
+name: std_variant_example_2
+header: ##### `std::variant` Example (2)
+
+But there are also c'tors accepting a single argument of
+each of the other types, so …
+
+.pull-left[
+```
+decltype(v) v2{4.2};
+```
+… initializes it as `float` …
+]
+.pull-right[
+```
+decltype(v) v3{"hello"};
+```
+… or type `std::string`.
+]
+
+An "un-initialized state" is possible, but **not** with the default c'tor
+(without arguments) as this initializes an `std::variant` according to its
+first type.._[]
+```
+std::variant <void*, unsigned long, MyClass> x; // <== nullptr
+std::variant <MyClass, void*, unsigned long> y; // <== MyClass{}
+std::variant <unsigned long, MyClass, void*> z; // <== 0uL
+```
+
+.W[
+The un-initialized state is assumed if an assignment throws after the old
+content has been already cleared-out and a failure occurs before the new
+content is completely written.
+]
+
+.F[:
+Built-in types will get the same initialization as for globals.
+]
+
+---
+template: plain
+name: std_variant_example_3
+header: ##### `std::variant` Example (3)
+
+.N.center[
+On each retrieval the expected content type needs to be specified.
+]
+
+There are three forms which differ in their failure indication, i.e. if the
+current content type is different from the expressed expectation.
+
+The first technique indicates failure by throwing an exception of type
+`std::bad_variant_cast`.._[]
+
+```
+try { // expecting `v` contains a `double` number
+    …
+    … std::get<float>(v) … // retrieve and process
+    …
+}
+catch (std::bad_variant_access& ex) { // `v` contains anything else
+    … 
+}
+```
+
+.F[:
+As for `std::any` this technique is usually preferable if the reason is a
+program bug which finally needs some fixing in the source code, re-compilation
+etc. The **`try` – `catch` may exist** and attempt to "resolve the problem"
+within the range of options to completely it, trying silent continuation with
+of without logging and some "self-healing", **or it may not exist** letting the
+process crash with a core file, and maybe restart it immediately or let an
+embedded device carry out a warm-boot …
+]
+
+---
+template: plain
+name: std_variant_example_4
+header: ##### `std::variant` Example (4)
+
+The second technique explicitly tests for in a series._[] for content types:
+
+.N.center[
+Note `get` here is replace with `get_if` **and**  
+is applied to **`&`**`v` (address of `v`) instead of plain `v`.
+]
+```
+…
+if (auto p = std::get_if<bool>(&v)) {
+    … *p … // refers to contained `int` value
+}
+else if (auto p = std::get_if<float>(&v)) {
+    … *p … // refers to contained `double` value
+}
+else if (auto p = std::get_if<std::string>(&v)) {
+    … *p …(or)… p-> … // refers to contained `std::string` instance
+}
+…
+```
+
+.W[
+The problem here is that – if a new alternative is added to the variant – it
+gets silently ignored **or** an inappropriate default processing is chosen.
+]
+
+---
+template: plain
+name: std_variant_example_5
+header: ##### `std::variant` Example (5)
+
+The third technique is helpful to turn "missing type cases" after a new
+alternative has been added into compile time errors.
+
+This is done with a static variant of the
+[Visitor Design Pattern](https://en.wikipedia.org/wiki/Visitor_pattern).
+The first step is to define a Functor-like class overloading `operator()`
+with argument types matching the `std::variant` alternatives:._[]
+
+```
+struct my_variant_printer {
+    void operator()(bool arg) const {
+        std::cout << (arg ? 'T' : 'F');
+    }
+    void operator()(float arg) const {
+        std::cout << arg;
+    }
+    void operator()(const std::string& arg) const {
+        std::cout << '"' << arg << '"';
+    }
+};
+```
+.F[:
+The approach shown above was chosen to be backward compatible with Boost.Variant
+with only minor changes. With the extended facilities for
+[Template Meta Programming](https://en.wikipedia.org/wiki/Template_metaprogramming)
+in C++17 there are more options which may or may not be considered
+"even more elegant" – see here:  
+http://en.cppreference.com/w/cpp/utility/variant/visit#Example
+]
+
+---
+template: plain
+name: std_variant_example_6
+header: ##### `std::variant` Example (6)
+
+The Functor-like class then is
+
+* handed over to the helper [`std::visit`] as first argument,
+* with the variant instance to process as second argument._[]
+```
+std::visit(my_variant_printer{}, v);
+```
+
+[`std::visit`]: http://en.cppreference.com/w/cpp/utility/variant/visit
+
+.N[
+A compile-time error will occur if the variant `v` holds alternatives which
+none of the overloaded `operator()` in `my_variant_printer` can handle.
+]
+
+.F[:
+With Boost.Variant **(1)** `boost::apply_visitor` is used instead of
+`std::visit`; **(2)** the Functor-like class has to be publicly derived from
+`boost::static_visitor<>`; **(3)** if some value is to be returned from the
+overloaded `operator()`s the type must be specified as template argument for
+`boost::static_visitor`.
+
+```
+  // visitor-based processing of a variant (with compile-error for "forgotten" alternatives)
+boost::variant<bool, …, …, MyClass> my_variant;
+…
+struct my_processing : boost::static_visitor<int>{
+    int operator()(bool arg) const { …; …; return …; }
+    …                                   // ^^^^^^^^--vvvvvvvv----- some `int`
+    int operator()(const MyClass& arg) const { …; …; return …; }
+};
+…
+int my_result = boost::apply_visitor(my_processing, my_variant);
+```
+]
+
+---
+template: plain
+name: concurrency_basics
+header: ## C++11: Concurrency Basics 
+
+With C++11 support for multi-threading was introduced.._[]
+
+-------------------------------------------------------------------------------
+
+* [Parallelizing Independent Tasks	](#parallelizing_tasks)
+* [Synchronisation with Mutexes		](#mutex_synchronisation)
+* [One-Time Execution			](#onetime_execution)
+* [Messaging with Condition Variables	](#condition_variables)
+* [Atomic Operations			](#atomic_operations)
+* [Direct Use of Threads		](#direct_use_of_threads)
+* [Native Threading Model Handles	](#native_thread_handles)
+* [Concurrency Recommendations		](#concurrency_recommendations)
+
+-------------------------------------------------------------------------------
+
+This optional part of the presentation was written with the intent to give an
+overview of the provided features only, it is by far not exhaustive!
+
+.F[:
+At first glance concurrency features may appear "as just some
+more library classes and functions". But beyond the hood, and especially in the
+area of allowed optimisations and to provide [Cache Coherence] on modern
+multi-core CPUs, concurrency is closely intertwined with code generation
+issues.
+]
+
+[Cache Coherence]: http://en.wikipedia.org/wiki/Cache_coherence
+
+---
+template: plain
+name: parallelizing_tasks
+header: ### Parallelizing Independent Tasks
+
+For complex tasks which can be split into independent parts, concurrency **and
+scalability to multiple CPU cores** can be easily achieved by following a
+simple recipe:
+
+1. Separate the task into a number of different functions (or calls of the same
+   function with different arguments).
+2. Run each such function by handing it over to `std::async`, storing the
+  `future` that is returned (easiest in an `auto`-typed variable).
+3. Fetch (and combine) the results by calling the member function `get` for
+   each `future` instance.
+
+That way all the functions may run concurrently and the last step synchronizes
+by waiting for completion.
+
+.I[
+For more information see:
+http://en.cppreference.com/w/cpp/thread/async
+]
+
+.F[:
+Technically the return value of `std::async` is an `std::future` but as this is
+a template and the type is usually somewhat different to spell out, most usages
+of `std::async` store the result in an `auto`-typed variable.
+]
+
+---
+template: plain
+name: futures_and_promises
+header: #### Foundation: Futures and Promises
+
+The foundation on which parallelizing tasks is build are [Futures and Promises].
+
+These need not be fully understood to apply the API (exemplified on the next
+pages), but may help to understand the basic machinery:
+
+* A future is the concrete handle which a client can use to fetch the result,
+  presumably made available by a different thread of execution.
+
+* A promise is a helper class which may be used in a separate thread to make a
+  result available for a client.
+
+.I[
+For more information on promises and futures see:
+http://en.cppreference.com/w/cpp/thread/future
+http://en.cppreference.com/w/cpp/thread/promise
+http://en.cppreference.com/w/cpp/thread/packaged_task
+]
+
+[Futures and Promises]: http://en.wikipedia.org/wiki/Futures_and_promises
+
+---
+template: plain
+name: parallelizing_example
+header: ##### Parallelizing Example
+
+The following example calculates the sum of the first `N` elements in `data` by
+splitting the work of `std::accumulate`, into two separate function calls, that
+may run concurrently:._[]
+```
+// calculate sum of first N values in data
+//
+long long sum(const int data[], std::size_t N) {
+    auto lower_part_sum = std::async(
+        [=]{ return std::accumulate(&data[0], &data[N/2], 0LL); }
+    );
+    auto upper_part_sum = std::async(
+        [=]{ return std::accumulate(&data[N/2], &data[N], 0LL); }
+    );
+    return lower_part_sum.get()
+         + upper_part_sum.get();
+}
+```
+
+.F[:
+Note the use of lambdas above – the actual call to `std::accumulate` will only
+happen when the lambda gets executed! A similar effect can be achieved as
+follows:
+```
+  // preparing the callable for std::async with std::bind:
+… std::async(std::bind(std::accumulate, &data[0], &data[N/2], 0LL)) …
+… std::async(std::bind(std::accumulate, &data[N/2], &data[N], 0LL)) …
+```
+]
+
+---
+template: plain
+header: #### Default Launch Policy
+
+The default behavior is that the systems decides on its own whether an
+asynchronously started task is run concurrently.._[]
+
+Using `std::async` **without an explicit launch policy**
+
+* **is just a hint** that it is acceptable to run a callable unit of code
+  concurrently,
+
+* as long as it has finished (and possibly returned a result) latest when
+  the `get`-call returns, which has bee invoked on the `std::future`.
+
+.W[
+Be sure **not** to use the default launch policy but specify concurrent
+execution explicitly (see next page) whenever it is essential that two
+callable run concurrently.
+]
+
+.F[:
+It is a well known effect that too many parallel threads of execution may
+rather degrade performance. Especially if threads are CPU bound, it makes
+little sense to have more threads as cores. Therefore the standard gives
+considerable freedom to the implementation, which might implement concurrency
+with `std::async` with a thread pool and turn to synchronous execution or lazy
+evaluation at a certain threshold.
+]
+
+---
+template: plain
+header: #### Explicit Launch Policies
+
+There is a second version of `std::async` which has a first argument to specify
+the launch strategy. 
+
+The standard defines two values:
+
+* `std::launch::async`  
+  if **not set** the callable will **not** run on its own thread;._[]
+
+* `std::launch::deferred`
+  of **set** the callable will **not** be called before `get` is invoked.
+
+.I[
+For more information on launch policies see:
+http://en.cppreference.com/w/cpp/thread/launch
+]
+
+.F[:
+One case in which this setting this flag may make sense is to test the program
+logic independent from possible problems created through race conditions or
+deadlocks, originating from dependencies between the "independent tasks", that
+had been overlooked.
+]
+
+---
+template: plain
+header: #### Catching Exceptions
+
+If the callable started via `std::async` throws an exception, it will appear as
+if it were thrown from the call to get.
+
+Hence, if the asynchronously run task may throw, fetching the result should be
+done in a try block:
+```
+auto task1 = std::async( … ); // whatever-is-to-do (and may throw)
+auto task2 = std::async( … ); // whatelse-is-to-do (and may throw)
+…
+try { … task1.get() … }
+} catch ( … ) { // what may be thrown from whatever-is-to-do
+   … // handle the case that whatever-is-to-do threw
+}
+try { … task2.get() … }
+} catch ( … ) { // what may be thrown from whatelse-is-to-do
+   … // handle the case that whatelse-is-to-do threw
+}
+```
+
+---
+template: plain
+header: #### Communication between Independent Tasks
+
+First of all: If the need arises to communicate between independent tasks, this
+should be taken **as a strong warning** that such tasks are actually not
+independent.
+
+.W[
+If parallel tasks are not independent, further needs follow quickly with
+respect to synchronize access to shared data … **with all the further
+intricacies following from this**.._[]
+]
+
+Nevertheless there is one common case that requires a simple form of
+communication between otherwise independent tasks.
+
+.N[
+
+* If there are several tasks working towards a common goal
+* of which one fails, making the goal unattainable,
+* the others should not waste CPU-time needlessly.
+
+]
+
+.F[:
+In other words: Pandora's proverbial can of worms opens quickly and widely …
+]
+
+---
+template: plain
+header: #### Communicate Failure between Concurrent Tasks
+
+A basic design that communicates failure between partners working towards a
+common goal is outlined in the following example.._[]
+.pull-left[
+The workers could look about so …
+```
+void foo ( … , bool &die) {
+    …
+    for ( … ) {
+        if (die) return;
+        …
+        … // some complex
+        … // algorithm
+        …
+        // may fail here
+        if ( … ) {
+            die = true;
+            return;
+        }
+    }
+}
+```
+]
+.pull-right[
+… being run by that code:
+```
+bool die = false;
+auto task1 = std::async(
+    [&die]{ foo( … , die); }
+);
+auto task2 = std::async(
+    [&die]{ foo( … , die); }
+);
+…
+… task1.get() …
+… task2.get() …
+…
+if (die) {
+    // goal not reached
+    …
+}
+```
+]
+
+.F[:
+To keep this code simple it just returns in case of problems, though it
+requires only a few changes if problems should be communicated to the caller
+via exceptions.
+]
+
+---
+template: plain
+name: mutex_synchronisation
+header: ### Synchronisation with Mutexes
+
+The word *Mutex* abbreviates *Mutual Exclusion* and describe the basic purpose
+of the feature.
+
+* Allow only one thread to enter a [Critical Section], typically non-atomically
+  executed sequence of statements
+* which temporarily invalidate an [Class Invariant], or
+* in other ways accesses a resource not designed for shared use.
+
+.N[
+In general, mutexes have at least two operations._[] for
+
+* **lock**-ing and
+
+* **unlock**-ing,
+
+but frequently provide additional features to make their practical use more
+convenient or less error prone.
+]
+
+[Critical Section]: http://en.wikipedia.org/wiki/Critical_section
+[Class Invariant]: http://en.wikipedia.org/wiki/Class_invariant
+
+.F[:
+Though the operations may not be spelled exactly *lock* and *unlock* …
+(especially as mutexes are somewhat related to [Semaphores], which originally
+named their lock (-like) acquire operation *P* and their unlock (-like) release
+operation *V*.
+]
+
+---
+template: plain
+name: mutex_example_1
+header: ##### Mutex Example (1)
+
+The following example calculates one table from another one:._[]
+```
+template<typename In, typename Out, typename Transformation>
+void worker(const In data[], std::size_t data_size,
+            Out result[], std::size_t &total_progress,
+            Transformation func) {
+    static std::mutex critical_section;
+    while (total_progress < data_size) {
+        critical_section.lock();
+        constexpr auto chunks = std::size_t{100};
+        const auto beg = total_progress;
+        const auto end = ((data_size - total_progress) > chunks)
+                 ? total_progress += chunks
+                 : total_progress = data_size;
+        critical_section.unlock();
+        std::transform(&data[beg], &data[end], &result[beg], func);
+    }
+}
+```
+
+.F[:
+The work is shared by any number of `worker` task run concurrently, each
+fetches and transforms a fixed number of values. This can be advantageous to
+splitting the work by calculating fixed-size regions of the table in advance,
+if the transformation function has a largely varying runtime depending on the
+argument value.
+]
+
+---
+template: plain
+name: mutex_example_2
+header: ##### Mutex Example (2)
+
+Assuming the transformation is to calculate square roots and there are
+two arrays of size `N`, say
+
+  * `data` (filled with values to transform), and
+  * `sqrts` to store the results
+
+workers may be created (to be handed over to `std::async`) as follows:._[]
+```
+std::size_t processed_count = 0;
+auto worker_task =
+    [&]() { worker(data, N, sqrts, processed_count,
+                   [](double e) { return std::sqrt(e); });
+    };
+```
+
+.F[:
+Given the above, a particular nifty way to create and run workers were:
+```
+  // assuming NCORES holds the number of cores to use by workers:
+std::array<std::future<void>, NCORES> workers;
+for (auto &w : workers)
+    w = std::async(worker_task);
+for (auto &w : workers)
+    try { w.get(); } catch (...) {}
+```
+]
+
+---
+template: plain
+name: mutexes_and_raii
+header: #### Mutexes and RAII
+
+As the mutex operations **lock** and **unlock** need to come correctly paired,
+they make a good candidate to apply a technique called [RAII].._[]
+
+It works by creating a wrapper class, executing
+
+* the acquiring operation (or *lock*-ing in this case) in its constructor, and
+* the releasing operation (or *unlock*-ing) in its destructor.
+
+Such helper classes are available in C++11 `std::lock_guard`.
+
+The big advantage is that unlocking the mutex is guaranteed for code blocks
+defining a RAII-style (guard) object locally, no matter whether control flow
+reached its end, or by `break`, `return`, or some exception.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/thread/lock_guard
+]
+
+.F[:
+This [TLA] is an abbreviation Bjarne Stroustrup once coined for *Resource
+Acquisition is Initialisation*. In a recent interview Stroustrup revealed that
+he is not particularly happy with the term he once choose. But to change it
+would require to travel back in a time machine and suggest something more
+appropriate to him, as today the term RAII is in much too widespread use to be
+replaced by something else.
+]
+
+[RAII]: http://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization
+[TLA]: http://www.catb.org/jargon/html/T/TLA.html
+
+---
+template: plain
+name: mutexes_and_raii
+header: #### Mutex Variants
+
+Mutexes in C++11 come in a number of flavours, which controlling their
+behaviour with respect to the following details:
+
+* Whether or not some thread that already locked a mutex may lock it once more
+  (and needs to release it as often).
+
+* Whether or not a thread waits if it finds a mutex locked by some other
+  thread, and in the latter case until *when* (clock-based time point) or
+  *how long* (duration) it waits.
+
+For all mutex variants there are also variants of RAII-style lock guards.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/thread/recursive_mutex
+http://en.cppreference.com/w/cpp/thread/timed_mutex
+http://en.cppreference.com/w/cpp/thread/recursive_timed_mutex and
+http://en.cppreference.com/w/cpp/thread/unique_lock
+ 
+]
+  
+---
+template: plain
+name: mutexes_and_raii
+header: #### C++14: Upgradable Locks
+
+C++14 added the class `std::shared_lock`, supporting a frequent necessity:._[]
+
+.N.center[
+[Multiple Reader/Single Write Locking Schemes](http://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock)
+]
+
+* Any number of (reader) threads may successfully `shared_lock` that kind of
+  mutex …
+* … but only one single (writer) thread is allowed to actually `lock` it
+  (unshared).
+
+C++14 also provides a RAII-style wrapper for shared locking.
+
+.I[
+For more information see:
+http://en.cppreference.com/w/cpp/thread/shared_timed_mutex and
+http://en.cppreference.com/w/cpp/thread/shared_lock
+]
+
+.F[:
+Note that the terms "reader" and "writer" indicates the typical use of that
+kind of mutex, assuming that it is sufficient for readers to obtain the lock
+shared, as it guarantees the invariants hold but no modifications are made,
+while writers will need to temporarily break invariants.
+]
+
+---
+template: plain
+name: mutexes_and_raii
+header: #### Defeating Deadlocks Caused by Mutex-Locking
+
+As a potentially blocking mechanism mutexes are famous for creating deadlocks,
+i.e 
+* in the situation where two resources *A* and *B* are required,
+* one thread acquires these in the order *first A, then B* and
+* another thread acquires these in the order *first B, then A*.._[]
+
+The obvious counter measure is to acquire locks always in the same order, as
+achievable with `std::lock` and `std::try_lock`.
+
+.I[
+For more information see:  
+without creating the potential for dead-locks) see:
+http://en.cppreference.com/w/cpp/thread/lock and
+http://en.cppreference.com/w/cpp/thread/try_lock
+]
+
+.F[:
+In practice, the potential for deadlocks is often not as obvious as in this
+example but much more intricate and close to impossible to spot, even in
+scrutinising code reviews. So, if (accidental) deadlocks cannot be avoided,
+sometimes a "self-healing" strategy is applied that works follows:  
+**If more than one lock needs to be acquired, acquire at least all others with
+setting a time-out.** If that hits, **release all locks** acquired so far,
+**delay** for some small amount of time (usually determined in a window with
+some slight randomness), then **try again** (and maybe in a different order).
+]
+
+---
+template: plain
+name: onetime_execution
+header: ### One-Time Execution
+
+For a particular scenario that would otherwise require the use of mutex-es to
+avoid a [Race Condition], there is pre-built solution in C++11.
+
+Executing a piece of code exactly once can be achieved in a cookbook-style as
+follows:
+```
+// in a scope reachable from all usage points:
+std::once_flag this_code_once;
+…
+std::call_once(this_code_once, …some callable… ); // somewhere
+…
+std::call_once(this_code_once, … ); // maybe somewhere else
+```
+
+For any of the callables associated with the same instance of an
+`std::once_flag` via `std::call_once`, without further protection via mutexes
+it is guaranteed that **at most one** is executed **at most once**.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/thread/once_flag and
+http://en.cppreference.com/w/cpp/thread/call_once
+]
+
+[Race Condition]: http://en.wikipedia.org/wiki/Race_condition
+
+---
+template: plain
+name: onetime_execution
+header: ##### One-Time Execution Example
+
+A typical use case for guaranteed one-time execution is some initialisation,
+that may be expensive and is therefore delayed until a function that depends
+on it is called the first time.
+
+The following fragment avoids parallel initialisations of `table`:
+```
+… foo( … ) {
+    static std::once_flag init;
+    static std::array<int, 1000> table;
+    std::call_once(init, [&table]) {
+        … // precalculate table when foo runs for the first time
+    });
+    … //
+}
+```
+
+.W[
+Note that the above code still has a problem with respect to the initialisation
+it seems to guarantee …._[]
+]
+
+
+.F[:
+The example code shown does **not** guarantee that from several concurrently
+executing threads all will see a **fully** initialised table – it only
+guarantees sure that the callable to pre-calculate the content will be
+executed exactly once and from exactly one thread.
+]
+
+---
+template: plain
+name: onetime_execution
+header: #### Local `static` Initialisation
+
+Since C++11 supports multi-threading in the core language, initialising local
+`static` variables is protected to be executed at most once:
+```
+… foo( … ) {
+   static const int z = expensive_calculation();
+   … //
+}
+```
+
+As since C++11 compilers are required to wrap the necessary protection around
+the initialisation of static locals, also this is guaranteed to work:._[]
+```
+class Singleton {
+    … //
+public:
+    static Singleton &getInstance() {
+        static Singleton instance;
+        return instance;
+    }
+};
+```
+
+.F[:
+Non-believers should consider to copy the above code, paste it to
+https://gcc.godbolt.org/ (or similar) after adding a member with a
+runtime-dependant initialisation, and view the assembler output … 
+]
+
+---
+template: plain
+name: condition_variables
+header: ### Notifications with Condition Variables
+
+A well-known abstraction in concurrent programming are
+combining mutexes with a signalling mechanism.
+
+One main use of condition variables is to **avoid busy waiting** in
+producer-consumer designs,
+
+* where consumer and producer run concurrently,
+
+* exchanging data over some buffer data structure.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/thread/condition_variable
+]
+
+---
+template: plain
+name: condition_variables
+header: ##### Condition Variable Example (1)
+
+The following *RingBuffer* class can put condition variables to good use …
+```
+template<typename T, std::size_t N>
+class RingBuffer {
+    std::array<T, N+1> buf;
+    std::size_t p = 0, g = 0;
+    bool empty() const { return p == g; }
+    bool full() const { return (p+1) % buf.size() == g; }
+public:
+    void put(const T &val) {
+        if (full())
+            … // handle case no space is available
+        buf[p++] = val; p %= buf.size();
+    }
+    void get(T &val) {
+        if (empty())
+            … // handle case no data is available
+        val = buf[g++]; g %= buf.size();
+    }
+};
+```
+… exactly at the currently omitted points.
+
+---
+template: plain
+name: condition_variables
+header: ##### Condition Variable Example (2)
+
+Obviously there are two conditions, that need special attention:
+
+* The buffer may be full when `put` is called, or
+* it may be empty, when `get` is called.
+
+Therefore two condition variables._[] are added, furthermore a mutex to protect
+accessing the buffer:
+```
+class RingBuffer {
+    … //
+    … // as before
+    … //
+    std::condition_variable data_available;
+    std::condition_variable space_available;
+    std::mutex buffer_access;
+public:
+    … // see next page
+};
+```
+
+.F[:
+As the buffer space cannot be full and empty at the same time, technically
+one condition variable would suffice, but for this introductory example using
+two different instances seems to be clearer.
+]
+
+---
+template: plain
+name: condition_variables
+header: ##### Condition Variable Example (3)
+
+There are two operations (of interest here), applicable to condition variables,
+**sending** and **waiting for** notifications:._[]
+```
+class RingBuffer
+   … // see previous page
+public:
+    void put(const T &val) {
+        std::unique_lock<std::mutex> lock(buffer_access);
+        space_available.wait(lock, [this]{ return !full(); });
+        buf[p++] = val; p %= buf.size();
+        data_available.notify_one();
+    }
+    void get(T &val) {
+        std::unique_lock<std::mutex> lock(buffer_access);
+        data_available.wait(lock, [this]{ return !empty(); });
+        val = buf[g++]; g %= buf.size();
+        space_available.notify_one();
+    }
+};
+```
+
+.F[:
+Essential here is also the connection between the condition variables, the
+mutex protecting the `RingBuffer` invariants, and the conditions checked as
+part of waiting, which are detailed on the next page.
+]
+
+---
+template: plain
+name: waiting_in_details
+header: #### Waiting Anatomy
+
+Waiting on a condition variable – as shown on the last page – with
+```
+// as part of put:
+   std::unique_lock<std::mutex> lock(buffer_access);
+   space_available.wait(lock, [this]{ return !full(); });
+```
+```
+// as part of get:
+   std::unique_lock<std::mutex> lock(buffer_access);
+   data_available.wait(lock, [this]{ return !empty(); });
+```
+
+is equivalent to the following, **with the mutex being locked before**:
+
+.pull-left[
+```
+// as part of put:
+   while (full()) { // !!full()
+       buffer_access.unlock();
+       // wait for notification
+       buffer_access.lock();
+   }
+```
+]
+.pull-right[
+```
+// as part of get:
+   while (empty()) { // !!empty
+       buffer_access.unlock();
+       // wait for notification
+       buffer_access.lock();
+   }
+```
+]
+
+At this point **the mutex is locked** (again) and **the condition is true.**
+
+---
+template: plain
+name: spurious_wakeups
+header: #### Spurious Wakeups
+
+In the example code before, the loop (in the equivalent of `wait`-ing) may seem
+unnecessary, as the respective notification will be sent only after some action
+has made the condition true.
+
+Nevertheless it makes sense and may even be necessary:
+
+* **First of all, an implementation is allowed to give [Spurious Wake-Up]s,
+  so the loop is necessary anyway.**
+
+* If notifications are sent while nobody waits on the condition variable, it is
+  simply discarded, therefore
+
+  * a producer-consumer scenario is more robust if it tends to send "too many"
+    notifications (of which some are discarded) …
+  * … while sending "too few" could cause some thread to wait forever.
+
+.N[
+Specifying the condition check in combination with `wait`-ing *does it right*
+and hence should be preferred over writing a loop explicitly.._[]
+]
+
+[Spurious Wake-Up]: http://en.wikipedia.org/wiki/Spurious_wakeup
+   
+
+.F[:
+Thus avoiding some later maintainer considers the `while` "unnecessary" and
+replace it with `if` …
+]
+
+---
+template: plain
+name: atomic_operations
+header: ### Atomic Operation Support
+
+With the support for atomic operations C++11 multi-threading allows to implement
+ 
+* [Wait-Free Algorithms](http://en.wikipedia.org/wiki/Non-blocking_algorithm#Wait-freedom),
+
+* [Lock-Free Algorithms](http://en.wikipedia.org/wiki/Non-blocking_algorithm#Lock-freedom),
+  and
+
+* [Obstruction-Free Algorithms](http://en.wikipedia.org/wiki/Non-blocking_algorithm#Obstruction-freedom).
+
+The basic concept is to provide a way to know whether a certain modification of
+some memory location was caused by the current thread or by another one.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/atomic
+]
+
+---
+template: plain
+name: atomic_operations_example
+header: ##### Atomic Operations Example
+
+The following example, demonstrating the lock-free approach with operations
+(instead of using mutexes) modifies a [former example](#mutex_example_1):
+```
+template<typename T1, typename T2, typename Transformation>
+void worker(T1 args[], std::size_t data_size, T2 result,
+            std::atomic_size_t &total_progress,
+            Transformation func) {
+    while (total_progress < data_size) {
+        constexpr auto chunks = std::size_t{100};
+        std::size_t beg = total_progress.load();
+        std::size_t end;
+        do {
+            end = ((data_size - beg) > chunks)
+                ? beg + chunks
+                : data_size;
+        } while (!total_progress.compare_exchange_weak(beg, end));
+        std::transform(&data[beg], &data[end], &sqrts[beg], func);
+    }
+}
+```
+
+.N[
+Be sure to understand that the loop controlled by the return value of
+`compare_exchange_weak` guarantees the prior calculations are (still) valid.
+]
+
+---
+template: plain
+name: atomic_operations
+header: #### Atomic Operations Recommendation
+
+.N[
+
+* Except for the potential of deadlocks the challenges are similar to
+  algorithms using locks:._[]
+
+  * Problems may only show for a critical timing and may be reproducible in
+    particular test environments only.
+
+  * In general, a failed test may show the presence of errors, but even many
+    successful tests do not guarantee their absence.
+
+]
+.W[
+Beyond trivial cases – like the one shown in the example –, implementing
+multi-threaded programs with atomic operations requires **substantial
+expertise**.
+
+Be sure to keep the design **as simple as possible** and have it reviewed by
+other developers experienced in that particular fields, maybe both, colleagues
+and hired consultants too.
+]
+
+.F[:
+It may very well be the case that problematic situations depend on hardware
+features like the size of cache-lines, the depth of an instruction pipeline, or
+the way branch prediction works.
+]
+
+---
+template: plain
+name: direct_use_of_threads
+header: ### Using Class `std::thread`
+
+In the examples before the class `std::thread` was used only indirectly (via
+`std::async`, building on [Futures and Promises](#futures_and_promises).
+
+* There is also a class `std::thread`
+* taking any runnable code as constructor argument,
+* executing it in a separate thread.
+
+.I[
+For more information see:  
+http://en.cppreference.com/w/cpp/thread
+]
+
+**There are explicitly no means provided to forcefully terminate one thread
+from another one.**
+
+.W[
+Any non-portable way._[] to forcefully terminate a thread risks to entail
+serious consequences later, as e.g. locks may not be released or awaited
+notifications not be sent.
+]
+
+.F[:
+Such as potentially existing *interrupt* or *kill* functions reachable via a
+[Native Interface Handle](#native_thread_handles).
+]
+
+---
+template: plain
+header: ##### Example for Using Class `std::thread`
+
+In case worker **returns no value** and **throws no exception**, like in a
+[former example](#mutex_example_1) (and assuming the
+[same set-up](#mutex_example_2)), using class `std::thread` directly can be
+straight forward (left) or done in the "nifty" way (right):
+
+.pull-left[
+```
+// starting some workers
+// multi-threaded ...
+std::thread t1{worker_task};
+std::thread t2{worker_task};
+…
+// ... and waiting for them
+// to finish:
+t1.join();
+t2.join();
+…
+```
+]
+.pull-right[
+```
+using namespace std;
+constexpr auto NCORES = 4;
+// starting one worker-thread
+// per core ...
+array<thread, NCORES> threads;
+for (auto &t : threads)
+    t = thread{worker_task};
+// ... and wait for all to
+// finish:
+for (auto &t : threads)
+    t.join();
+```
+]
+
+An alternative to [`join`]-ing with a thread is [`detach`]-ing it.
+
+[`join`]: http://en.cppreference.com/w/cpp/thread/thread/join
+[`detach`]: http://en.cppreference.com/w/cpp/thread/thread/detach
+
+.W[
+A program will immediately terminate if an instance of class `std::thread`
+referring to an active thread gets destructed.
+]
+
+---
+template: plain
+header: #### Recommendations for Using Class `std::thread`
+
+.N[
+
+* In trivial cases (no exceptions, no result to fetch) using threads via
+  instances of class `std::thread` may be considered.
+
+* Nevertheless understand the peculiarities and know how to avoid race
+  conditions, especially when `std::thread` objects go out of scope.._[]
+
+]
+.W[
+It causes the program to terminate if the callable started throws an exception
+or an instance of `std::thread` is still in *joinable state* when it goes out
+of scope and gets destructed.
+]
+
+.F[:
+At [1:00:47] the following video by Scott Meyers gives a good introduction to
+the problem and some recipes how it can be avoided:
+http://channel9.msdn.com/Events/GoingNative/2013/An-Effective-Cpp11-14-Sampler
+]
+
+[1:00:47]: https://www.youtube.com/watch?feature=player_detailpage&v=BezbcQIuCsY#t=3646
+
+---
+template: plain
+name: native_thread_handles
+header: ### Native Handles
+
+Last and finally, most C++11 multi-threading implementation build on a
+threading model provided by their execution environment.
+
+.N[
+The requirements in the standard are rather the intersection of the features
+provided by well-known threading models.
+]
+
+Usually and typically the standard does not mandate any any extensions thereof,
+but in some cases provides a way to "reach through" to the native thread model:
+
+* E.g. `std::thread::native_handle` could provide ways to manipulate thread
+  priorities, maybe including ways to specify protocols for [Priority Ceiling]
+  or other means to circumvent [Priority Inversion].
+
+* Also the classes for condition variables and the various kinds of mutexes
+  have member functions `native_handle`.
+
+* The enumeration `std::launch` may provide more (named) values to control
+  implementation specific details in the behavior of `std::async`.
+
+[Priority Ceiling]: http://en.wikipedia.org/wiki/Priority_ceiling_protocol
+[Priority Inversion]: http://en.wikipedia.org/wiki/Priority_inversion
+
+---
+template: plain
+name: concurrency_recommendations
+header: ### Concurrency Recommendations
+
+So far the presentation of C++11 concurrency support was only meant as an
+overview.
+
+.W[
+Practically using concurrency features beyond parallelizing independent tasks
+requires much more knowledge and experience in this area, what this
+presentation can not provide.
+]
+
+A good and near to exhaustive coverage of the concurrency part of C++11 is:
+
+.N.center[
+C++ Concurrency in Action  
+Practical Multithreading  
+by Anthony Williams  
+[ISBN-13: 978-1-9334988-77-1](http://www.cplusplusconcurrencyinaction.com)
+]
+---
+template: plain
+name: appendices
+header: ## Appendices and Info-Graphics
+
+This sections collects:
+
+* [Info-Graphics Used Regularly			](#regular_infographics)
+
+* [Optional Info-Graphics			](#opt_infographics)
+
+The former are linked from other pages of this presentation, the latter may be
+used to answer specific questions sometimes posed by participants.
+
+---
+template: plain
+name: regular_infographics
+header: #### Regular Info-Graphics
+
+##### General Hardware Model and Mapping of C++
+
+* [Hardware Execution Model			](#execution_model)
+* [Class to Memory Mapping			](#class_to_memory)
+* [Exception Basic Principles			](#exception_basics)
+* [Smart Pointers				](#smart_pointers)
+
+##### Templates
+
+* [Template Classes and Functions		](#template_basics)
+* [Parametrizing Types and Sizes		](#param_types_sizes)
+
+##### Standard Library
+
+* [Standard Strings 				](#std_string_basics)
+* [I/O-Stream Basics				](#io_stream_basics)
+* [STL Design Overview				](#stl_design_overview)
+* [STL Sequence Containers			](#stl_sequence_cont)
+* [STL Associative Containers			](#stl_associative_cont)
+* [C++11 Regular Expression API			](#cpp11_regex_api)
+
+---
+template: linkinfo
+graphic: ExecutionModel
+name: execution_model
+header: #### Execution Model
+
+Basic hardware components and their typical use in C/C++ programs.
+
+---
+template: linkinfo
+graphic: ClassToMemoryMapping
+name: class_to_memory
+header: #### Class to Memory Mapping
+
+How C++ classes are mapped to memory (and finally decay to C data `struct`-s),
+including Composition and Inheritance.
+
+---
+template: linkinfo
+graphic: RuntimeTypeIdentification
+name: virtual_mfn_call
+header: #### Run-Time Type Identification
+
+Comparing specific run-time type identification via virtual member function
+with its explicit form.
+
+---
+template: linkinfo
+graphic: ExceptionBasics
+name: exception_basics
+header: #### Exception Basic Principles
+
+View of exceptions as non-local branches, typically used for error recovery
+paths.
+
+---
+template: linkinfo
+graphic: SmartPointers
+name: smart_pointers
+header: #### C++11 Smart Pointers
+
+Principles and Implementation of Smart Pointers (as provided by C++11).
+
+---
+template: linkinfo
+graphic: TemplateBasics
+name: template_basics
+header: #### Template Classes and Functions
+
+Basic use of C++ Templates for classes and functions.
+
+---
+template: linkinfo
+graphic: ParametrizedTypesAndSizes
+name: param_types_sizes
+header: #### Parametrizing Types and Sizes
+
+Example for parametrizing (element) types and size of a generic `RingBuffer`
+class.
+
+---
+template: linkinfo
+graphic: StringBasics
+name: std_string_basics
+header: #### Basics String Handling
+
+Overview of architecture and some details of the `std::string` class.
+
+---
+template: linkinfo
+graphic: IOStreamBasics
+name: io_stream_basics
+header: #### I/O-Stream Basics
+
+Overview of architecture and some details of I/O-streams.
+
+---
+template: linkinfo
+graphic: STL-IteratorUsages
+name: stl_design_overview
+header: #### STL Architecture Overview
+
+Overview of the STL Architecture, emphasizing the use of iterators as kind of
+"glue" between containers and algorithms
+
+---
+template: linkinfo
+graphic: STL-SequenceContainers
+name: stl_sequence_cont
+header: #### STL Sequence Containers
+
+Depicting implementation of STL Sequence Containers.
+
+But also note: The STL specification asserts performance and other properties,
+**not** a specific implementation!
+
+---
+
+template: linkinfo
+graphic: STL-AssociativeContainers
+name: stl_associative_cont
+header: #### STL Associative Containers
+
+Depicting implementation of STL Associative Containers.
+
+But also note: The STL specification asserts performance and other properties,
+**not** a specific implementation!
+
+---
+template: linkinfo
+graphic: RegularExpressions
+name: cpp11_regex_api
+header: #### C++11 Regular Expression API
+
+Understanding the Regular Expressions API in C++11.
+
+---
+template: plain
+name: opt_infographics
+header: #### Optional Info-Graphics (Mixed 1)
+
+##### General Goals of Software Design
+
+* [Guiding Principles					](#design_principles)
+
+##### Unified Modelling Language
+
+* [Classes and Relations in UML				](#quick_uml)
+* [Classes Relations by Example				](#class_design)
+
+##### Various Applications of `virtual` Member Functions
+
+* [Type Based Branching (Practical RTTI)		](#practical_rtti)
+* [Two Implementations of the "Open/Close" (Principle)	](#two_open_close)
+
+---
+template: plain
+name: opt_infographics_2
+header: #### Optional InfoGraphics (Mixed 2)
+
+##### More on Inheritance
+
+* [Multiple Inheritance (Principle)			](#multi_inherit)
+* [Problems of Diamond-Shaped Inheritance		](#multi_diamond)
+
+##### More on Iterators
+
+* [C++98 Iterator Categories				](#iter_categories)
+* [Specific Iterator Details				](#iter_specifics)
+
+##### More on Resource Management and Exceptions
+
+* [RAII Style Resource Management			](#raii_style_resources)
+* [Specific Exception Details				](#exception_specifics)
+
+##### More on C++ Templates
+
+* [Reducing Code Bloat by Templates			](#template_bloat)
+
+---
+template: linkinfo
+graphic: GuidingPrinciples
+name: design_principles
+header: #### Guiding Principles
+
+Partitioning to tackle complexity and provide chances to come up with to
+components that can be used in flexible ways is at the core of all software
+design (if not at the core of all engineering).
+
+---
+template: linkinfo
+graphic: UML-ClassesAndRelations
+name: quick_uml
+header: #### Classes and Relations (Quick UML)
+
+UML Notation to graphically depict classes and their typical relations.
+
+---
+template: linkinfo
+graphic: Example-ClassDesign
+name: class_design
+header: #### Class Relations by Example
+
+Some examples for class relations, highlighting options for reuse and flexible
+extensibility.
+
+---
+template: linkinfo
+graphic: TypeBasedBranching
+name: practical_rtti
+header: #### Type Based Branching
+
+Comparing explicit use of RTTI to (usually more elegant) type-based branching
+via virtual member functions.
+
+---
+template: linkinfo
+graphic: Example-OpenClosePrinciple
+name: two_open_close
+header: #### Two Implementations of "Open/Close"
+
+Comparing the "open/close" approach based on virtual member functions and
+templates.
+
+---
+template: linkinfo
+graphic: MultipleInheritance
+name: multi_inherit
+header: #### Mutiple Inheritance (Principle)
+
+Showing the principles of multiple inheritance (also preparing diamond-shaped
+inheritance).
+
+---
+template: linkinfo
+graphic: DiamondShapedInheritance
+name: multi_diamond
+header: #### Diamond-Shaped Inheritance
+
+Showing special handling and considerations if multiple inheritance turns into
+a diamond-shaped relation.
+
+---
+template: linkinfo
+graphic: STL-IteratorCategories
+name: iter_categories
+header: #### C++98 Iterator Categories
+
+Main Iterator Categories as defined by C++98.
+
+---
+template: linkinfo
+graphic: STL-IteratorDetails
+name: iter_specifics
+header: #### IteratorSpecific Details
+
+Some more iterator specific details (like `const_`-iterators versus mutable …).
+
+---
+template: linkinfo
+graphic: ResourceManagement
+name: raii_style_resources
+header: #### RAII Style Resource Management
+
+Managing Resources via RAII (Resource Acquisition is Initialisation).
+
+---
+template: linkinfo
+graphic: ExceptionDetails
+name: exception_specifics
+header: #### Specific Exception Details
+
+Some more specific details on exceptions (like *do*-s and *don't*-s).
+
+---
+template: linkinfo
+graphic: ReducingCodeBloat
+name: template_bloat
+header: #### Reducing Code Bloat by Templates
+
+Understanding the nature of C++ templates and how to reduce code bloat.
+
+
+</textarea>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- ::::::::::::::::::::: )-: ereh TNETNOCLAER fo dne :::::::::::::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+    <script src="remark.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({ highlightLanguage: 'cpp', highlightStyle: 'docco' });
+    </script>
+  </body>
+</html>
