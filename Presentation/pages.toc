@@ -1,0 +1,216 @@
+Agenda .....................................................   1
+  Interrupts Enabled .......................................   2
+Online vs. Offline Resources ...............................   3
+  Online Version of this Presentation ......................   4
+  External Online Resources ................................   5
+    Online C++ References ..................................   6
+    Online C++ Compilers ...................................   7
+The C/C++ Preprocessor .....................................   8
+  Preprocessor Use Cases ...................................   9
+    Header Files ...........................................  10
+    Include-Guards .........................................  11
+    Special Usage Macros ...................................  12
+How C++ Extends C ..........................................  13
+  Arithmetic Types .........................................  14
+    Brace Initialization ...................................  15
+    Enforcing Conversions / Suppressing Warnings ...........  16
+  The `const` Qualifier ....................................  17
+  Arrays and Pointers ......................................  18
+    Indexing and Address Arithmetic ........................  19
+    Equivalence of Indexing and Address Arithmetic .........  20
+    Arrays .................................................  21
+    Arrays (2) .............................................  22
+    `const` Arrays .........................................  23
+    Pointers ...............................................  24
+    Typed Pointers vs. Generic Pointers (`void *`) .........  25
+    Arbitrary Type Conversions .............................  26
+    `const` Qualifier for Pointers .........................  27
+  References ...............................................  28
+    References Viewed as Aliases ...........................  29
+    References versus Pointers .............................  30
+    `const`-References .....................................  31
+    Lvalue- and Rvalue-References ..........................  32
+    When to Use References? ................................  33
+  Default Arguments ........................................  34
+  Function Overloading .....................................  35
+  Operator Overloading .....................................  36
+Object Oriented Programming ................................  37
+  From `struct` to `class` .................................  38
+    Defining `LimitCounter` Objects ........................  39
+    Implementing Member Functions ..........................  40
+    Implementing Member Functions Inline ...................  41
+    Implementing Members Inside the Class ..................  42
+  Access Protection ........................................  43
+    Levels of Access Protection ............................  44
+    `struct` vs. `class` ...................................  45
+  Constructors .............................................  46
+    Constructors: Member Initialisation Lists ..............  47
+  Destructors ..............................................  48
+  Static Members ...........................................  49
+  Base and Derived Classes .................................  50
+    Derive from a Base Class ...............................  51
+    Add Members ............................................  52
+    Add A Constructor ......................................  53
+    OverflowCounter Overwriting `count` ....................  54
+    Reducing Protection of Members .........................  55
+    Giving Hints to From Base Classes ......................  56
+    Using Hints in Derived Classes .........................  57
+  `virtual` Member Functions ...............................  58
+    Adding Extension Points in the Base Class ..............  59
+    Hooking Code to Extension Points from Derived Classes ..  60
+    A Chain of Counters ....................................  61
+  Alternative Design .......................................  62
+Introduction to Exceptions .................................  63
+  Throwing Exceptions ......................................  64
+  Catching Exceptions ......................................  65
+  Configurable Exceptions ..................................  66
+  Configurable Exceptions (2) ..............................  67
+Dynamic Memory Allocation ..................................  68
+      `RingBuffer` Example .................................  69
+      `RingBuffer` Example (2) .............................  70
+      `RingBuffer` Example (3) .............................  71
+      `RingBuffer` Example (4) .............................  72
+      `RingBuffer` Example (5) .............................  73
+      `RingBuffer` Example (6) .............................  74
+      `RingBuffer` Example (7) .............................  75
+  Pointers Revisited .......................................  76
+  Smart Pointers ...........................................  77
+      `RingBuffer` Example with `std::unique_ptr` ..........  78
+  Beyond Unique Ownership ..................................  79
+Template Introduction ......................................  80
+      Template Example .....................................  81
+      Template Example (2) .................................  82
+      Template Example (3) .................................  83
+      Template Example (4) .................................  84
+      Template Example (5) .................................  85
+      Template Example (6) .................................  86
+    Using Templates for Policies ...........................  87
+    Using Templates for Policies (2) .......................  88
+    Template Meta-Programming ..............................  89
+    Boost Call Traits ......................................  90
+Standard Library Overview ..................................  91
+  Standard String Class ....................................  92
+  Classes for Stream Handling ..............................  93
+    A Poor Man's Approach to TDD ...........................  94
+    A Poor Man's Approach to TDD (2) .......................  95
+  Container Classes from the STL ...........................  96
+    Sequential Containers ..................................  97
+    Associative Containers .................................  98
+    Generic Container Iterators ............................  99
+    Iterating Over Maps .................................... 100
+  STL Algorithms ........................................... 101
+    Output to Containers ................................... 102
+    Algorithms – A Look Inside ............................. 103
+    Specifying Predicates .................................. 104
+    C++11 Lambdas .......................................... 105
+      Lambda 101 – Definition Syntax Example ............... 106
+      Lambda 101 – Argument Lists .......................... 107
+      Lambda 101 – Named Lambdas ........................... 108
+      Lambda 101 – Capture Lists (Motivation) .............. 109
+      Lambda 101 – Capture List Example .................... 110
+    Beware of the Pitfalls with Lambdas .................... 111
+    Classic C++ Function Objects ........................... 112
+    Type Generic Functors .................................. 113
+    Local Context by Reference (Functors) .................. 114
+    Local Context by Reference (Lambdas) ................... 115
+Generalized Callables ...................................... 116
+  Use of Callables ......................................... 117
+      First Code Example with `std::function`  ............. 118
+      Second Code Example with `std::function` ............. 119
+    `std::function` Performance Considerations ............. 120
+  `std::bind` vs. Lambdas .................................. 121
+      Code Example with `std::bind` ........................ 122
+    More Pitfalls with Callables ........................... 123
+Library Extensions since C++11 ............................. 124
+  Durations, Time Points, and Clocks ....................... 125
+      Duration Example ..................................... 126
+      Clock Example ........................................ 127
+  Pseudo Random Numbers .................................... 128
+  Regular Expressions ...................................... 129
+  Ad-hoc Data Structures: `std::tuple` ..................... 130
+    `std::tuple` Typical Implementation .................... 131
+      `std::tuple` Example ................................. 132
+      `std::tuple` Example (2) ............................. 133
+      `std::tuple` Example (3) ............................. 134
+      `std::tuple` Example (4) ............................. 135
+  Single-Element Containers: `std::optional` ............... 136
+    `std::optional` Typical Implementation ................. 137
+      `std::optional` Example .............................. 138
+      `std::optional` Example (2) .......................... 139
+    More Use Cases for `std::optional` ..................... 140
+  Generic Pointers with Runtime-Checking): `std::any` ...... 141
+  `std::any` Typical Implementation ........................ 142
+      `std::any` Example ................................... 143
+      `std::any` Example (2) ............................... 144
+      `std::any` Example (3) ............................... 145
+      `std::any` Example (4) ............................... 146
+  Type-Tracking Unions: `std::variant` ..................... 147
+  `std::variant` Typical Implementation .................... 148
+      `std::variant` Example ............................... 149
+      `std::variant` Example (2) ........................... 150
+      `std::variant` Example (3) ........................... 151
+      `std::variant` Example (4) ........................... 152
+      `std::variant` Example (5) ........................... 153
+      `std::variant` Example (6) ........................... 154
+C++11: Concurrency Basics  ................................. 155
+  Parallelizing Independent Tasks .......................... 156
+    Foundation: Futures and Promises ....................... 157
+      Parallelizing Example ................................ 158
+    Default Launch Policy .................................. 159
+    Explicit Launch Policies ............................... 160
+    Catching Exceptions .................................... 161
+    Communication between Independent Tasks ................ 162
+    Communicate Failure between Concurrent Tasks ........... 163
+  Synchronisation with Mutexes ............................. 164
+      Mutex Example (1) .................................... 165
+      Mutex Example (2) .................................... 166
+    Mutexes and RAII ....................................... 167
+    Mutex Variants ......................................... 168
+    C++14: Upgradable Locks ................................ 169
+    Defeating Deadlocks Caused by Mutex-Locking ............ 170
+  One-Time Execution ....................................... 171
+      One-Time Execution Example ........................... 172
+    Local `static` Initialisation .......................... 173
+  Notifications with Condition Variables ................... 174
+      Condition Variable Example (1) ....................... 175
+      Condition Variable Example (2) ....................... 176
+      Condition Variable Example (3) ....................... 177
+    Waiting Anatomy ........................................ 178
+    Spurious Wakeups ....................................... 179
+  Atomic Operation Support ................................. 180
+      Atomic Operations Example ............................ 181
+    Atomic Operations Recommendation ....................... 182
+  Using Class `std::thread` ................................ 183
+      Example for Using Class `std::thread` ................ 184
+    Recommendations for Using Class `std::thread` .......... 185
+  Native Handles ........................................... 186
+  Concurrency Recommendations .............................. 187
+Appendices and Info-Graphics ............................... 188
+    Regular Info-Graphics .................................. 189
+    Execution Model ........................................ 190
+    Class to Memory Mapping ................................ 191
+    Run-Time Type Identification ........................... 192
+    Exception Basic Principles ............................. 193
+    C++11 Smart Pointers ................................... 194
+    Template Classes and Functions ......................... 195
+    Parametrizing Types and Sizes .......................... 196
+    Basics String Handling ................................. 197
+    I/O-Stream Basics ...................................... 198
+    STL Architecture Overview .............................. 199
+    STL Sequence Containers ................................ 200
+    STL Associative Containers ............................. 201
+    C++11 Regular Expression API ........................... 202
+    Optional Info-Graphics (Mixed 1) ....................... 203
+    Optional InfoGraphics (Mixed 2) ........................ 204
+    Guiding Principles ..................................... 205
+    Classes and Relations (Quick UML) ...................... 206
+    Class Relations by Example ............................. 207
+    Type Based Branching ................................... 208
+    Two Implementations of "Open/Close" .................... 209
+    Mutiple Inheritance (Principle) ........................ 210
+    Diamond-Shaped Inheritance ............................. 211
+    C++98 Iterator Categories .............................. 212
+    IteratorSpecific Details ............................... 213
+    RAII Style Resource Management ......................... 214
+    Specific Exception Details ............................. 215
+    Reducing Code Bloat by Templates ....................... 216
