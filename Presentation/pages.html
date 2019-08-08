@@ -141,8 +141,8 @@ name: frontmatter
 ]
 
 .subtitle[
-	An Refresher's Overview on C++ Based on
-	ISO/ANSI-Standards C++98, C++03 und C++11
+	An Refresher's Overview on C++ Based On 
+	Classic and Modern Language Standards
 ]
 .author.pull-left[
 	Durchführung:  
@@ -173,18 +173,17 @@ selected for the next two days.
 * [Object-Oriented Programming			](#oop_intro)
 * [Introduction to Exceptions			](#exception_intro)
 * [Dynamic Memory Allocation 			](#dynamic_memory)
+* [Strings and Streams				](#stdlib_strings_streams)
 * [Introduction to Templates			](#template_intro)
-* [Library Overview (Strings, IOstreams, STL …)	](#library_overview)
-* [Optional: C++11 Generalized Callables	](#generalized_callables)
-* [Optional: C++11 Concurrency Basics		](#concurrency_basics)
-* [Optional: Library Extensions since C++11	](#cpp11_library_extensions)
+* [STL (Containers and Algorithms)		](#stdlib_stl)
+* [Generalized Callables			](#generalized_callables)
+* [Concurrency Basics				](#concurrency_basics)
+* [More Standard Library Components		](#more_library_components)
 * [Appendices and Info-Graphics			](#appendices)
 
 -------------------------------------------------------------------------------
 
-Variations can be in the beginning, e.g. which of the optional parts are of
-most interest and should be given priority – if time allows their coverage.
-
+Variations and extensions can be agreed any time.
 
 ---
 template: plain
@@ -594,7 +593,7 @@ name: cpp_extensions
 header: ## How C++ Extends C
 
 * [Arithmetic Types	](#arithmetic_types)
-* [Const-Qualifier	](#const_qualifier)
+* [Const-Qualifiers	](#const_qualifiers)
 * [Pointers and Arrays	](#pointers_and_arrays)
 * [References		](#references)
 * [Default Arguments	](#default_args)
@@ -821,19 +820,59 @@ ADVANCED
 
 ---
 template: plain
-name: const_qualifier
-header: ### The `const` Qualifier
+name: const_qualifiers
+header: ### Qualifiers Implying Immutability
+
+There are two qualifiers.[] making a variable" immutable:
+
+* `const` is applicable to variables only:
+
+  * the compiler will not generate code that modifies the initial value
+
+  * the linker may or may not put the variable in read-only memory
+
+* `constexpr` is applicable to variables and functions:
+
+  * for a variable it guarantees the initial value can be calculated at
+    compile time
+
+  * for functions it does the calculations at compile time, if possible
+
+.F[:
+`const` was originally introduced with C++ but also became part of the C89
+standard – hence today, 25 years later, it may well be reclaimed as a C++
+addition but few people still know today. Nevertheless it seems even today C++
+programs make more use of this feature than C programs. `constexpr` was
+introduced with C++11.
+]
+
+---
+template: plain
+header: #### `const` Is To Ensure Immuability
 
 A variable may optionally be qualified with `const`:._[]
+.pull-left[
+Brace Initialization:
+```
+const int x{17};
+float const PI{2*std::acos(0.0)};
+```
+]
+.pull-right[
+Classic Initialization:
 ```
 const int x = 17;
-double const PI = 3.14;
+double const PI = 2*std::acos(0.0)};
 ```
-The effect is that
+]
 
-* there must be an initialisation and
+* There must be an initialisation (except when `extern`)
 
-* subsequent attempts to modify the variable result in a compile time error.
+* subsequent attempts to modify the variable
+
+  * result at least in a compile time error
+
+  * may also cause a run time error
 
 .N[
 As the examples show, the `const` qualifier may be written to the left or to
@@ -851,11 +890,86 @@ programs make more use of this feature than C programs.
 
 ##### Proposed Explorations:
 
-* Demonstrate various effects of using `const`:
+Demonstrate various effects of using `const`:
 
-  * Omitting initialisation.
+* Omitting initialisation.
 
-  * Attempt to modify.
+* Attempt to modify.
+
+---
+template: plain
+header: #### `constexpr` Is To Ensure Compile Time
+
+Variables and Functions may optionally be qualified with `constexpr`:
+.pull-left[
+```
+constexpr float PI{3.14159};
+```
+]
+.pull-right[
+```
+constexpr float PI = 3.14159;
+```
+]
+
+Qualifying a variable with `constexpr` requires the initial value can be
+calculated at compile time.
+
+.N[
+This is not limited literal values, expressions and calling `constexpr`
+qualified functions with `constexpr` arguments is also supported.
+]
+
+Note that the following may or may not work, depending on whether `std::acos`
+is `constexpr`:._[]
+
+```
+constexpr float PI{std::acos(0.0f)};
+```
+
+.F[:
+The inverse cosine function is defined in header `<cmath>`. The C++11 standard
+does not require it is `constexpr` though it is with the GCC-Compiler (`g++`)
+but not with the LLVM-Compiler (`clang++`).
+]
+
+???
+
+##### Proposed Explorations:
+
+Consider the following `constexpr` functions:
+
+```
+constexpr auto highbit(unsigned long long n) {
+    unsigned result{0};
+    for (; n; n >>= 1) ++result;
+    return result;
+}
+constexpr auto maskof(unsigned long long n) {
+	return n ? (1 << highbit(n)) - 1 : 0;
+}
+constexpr unsigned long long z{maskof(123)};
+```
+
+* Determine from a code analysis what the functions `highbit` and `maskof` do.
+
+* Verify by adding an executable program like this:
+
+```
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    for (auto i : { 1, 2, 3, 4, 5, 10, 20, 100, 200, 255,
+                    256, 127, 63, 31, 15, 7, 3, 1, 0 }) {
+        cout << "i = " << dec << setw(5) << i
+             << "  highbit = " << dec << setw(2) << highbit(i)
+             << "  maskof = 0x" << hex << maskof(i)
+             << endl;
+    }
+}
+```
 
 ---
 template: plain
@@ -1738,7 +1852,7 @@ header: ### From `struct` to `class`
 #### Turning Functions into Members
 
 C++ allows to define functions that take a pointer to a `struct` as (first)
-argument inside the class as members (aka. member functions):
+argument inside the class as members (aka. member functions):._[]
 ```
 struct LimitCounter {
     int start;
@@ -1749,6 +1863,11 @@ struct LimitCounter {
     void reset();
 };
 ```
+
+.F[:
+A plain C example using just a `struct` and define the functions to access it
+outside can be found here: http://coliru.stacked-crooked.com/a/b2ce4b96d9725055
+]
 
 .N[
 The argument to hand over the limit counter data is now implied and not named
@@ -2208,19 +2327,23 @@ One possibility for a more elegant way would be a reduced protection of its
 class LimitCounter {
     …
 protected:
-    const int limit;
+    const int start;
     …
 }
 ```
 The solution possible with this modification still looks clumsy:
 ```
 void OverflowCounter::count() {
-    const bool will_reset = (value() == limit);
     LimitCounter::count();
-    if (will_reset)
+    if (value() == start)
         next.count();
 }
 ```
+
+.F[:
+The full example can be found here:
+http://coliru.stacked-crooked.com/a/e69477f058f431ab
+]
 
 ---
 template: plain
@@ -2261,6 +2384,11 @@ value.
 
 .N.center[
 Still not a really nice solution!
+]
+
+.F[:
+The full example can be found here:
+http://coliru.stacked-crooked.com/a/57e620c867233fed
 ]
 
 ---
@@ -2321,8 +2449,8 @@ returns immediately:
 ```
 void LimitCounter::count() {
     if (++ticks > limit) {
-        ticks = start;
         overflow();
+        ticks = start;
     }
 };
 ```
@@ -2335,7 +2463,7 @@ This would be the **full** code of the class `OverflowCounter` then:
 ```
 class OverflowCounter : public LimitCounter {
     LimitCounter &next;
-    virtual void overflow() {
+    virtual void overflow() override {
         next.count();
     }
 public:
@@ -2378,6 +2506,11 @@ argument for another `OverflowCounter` is worth mentioning here:
 It is only possible because the `OverflowCounter` has the `LimitCounter` as
 `public` base class and therefore – as an instance of the derived class – the
 former is always accepted as a substitute for the latter.
+]
+
+.F[:
+The full example can be found here:
+http://coliru.stacked-crooked.com/a/59c721aa3218086b
 ]
 
 ---
@@ -2849,6 +2982,132 @@ lacked the distinction between *Move* and *Copy*.
 
 ---
 template: plain
+name: stdlib_strings_streams
+header: ## Strings and Streams
+
+Covered here are:
+
+* [The class `std::string`](#std_string)
+* [Classes for Stream Handling](#std_iostream)
+
+[More standard library components follow.](#stdlib_stl)
+
+---
+template: plain
+name: std_string
+header: ### Standard String Class
+
+[`std::string`]: http://de.cppreference.com/w/cpp/string/basic_string
+
+The [`std::string`] is designed to be used much like a built-in type.
+
+The following program fragment prints the largest word from its input (in
+lexicographical sort order):
+```
+string word;
+string maxword:
+while (cin >> word) {
+    if (maxword < word) maxword = word;
+}
+cout << maxword << endl;
+```
+
+.N[
+As the class `std::string` is not covered in much detail here feel free to
+ask for more information based on the
+[Infographic "Standard Strings"](#std_string_basics) in the appendix.
+]
+
+---
+template: plain
+name: std_iostream
+header: ### Classes for Stream Handling
+
+Support for handling data streams – mainly dealing with the aspects of
+abstraction and transparent buffering – falls into two big groups:
+
+* [`std::istream`] and [`std::ostream`] hosting all the input and output
+  operations while decoupling the actual data source or sink.
+
+* [`std::ifstream`] and [`std::ofstream`] using a classical (external) file
+  as data source or sink.
+
+* [`std::istringstream`] and [`std::ostringstream`] using an [`std::string`] as
+  data source or sink.
+
+[`std::string`]: http://de.cppreference.com/w/cpp/string/basic_string
+[`std::istream`]: http://en.cppreference.com/w/cpp/io/basic_istream
+[`std::ostream`]: http://en.cppreference.com/w/cpp/io/basic_ostream
+[`std::ifstream`]: http://en.cppreference.com/w/cpp/io/basic_ifstream
+[`std::ofstream`]: http://en.cppreference.com/w/cpp/io/basic_ofstream
+[`std::istringstream`]: http://en.cppreference.com/w/cpp/io/basic_istringstream
+[`std::ostringstream`]: http://en.cppreference.com/w/cpp/io/basic_ostringstream
+
+.N.center[
+As the above classes are not covered in much detail here  
+feel free to ask for more information based on  
+the [Infographic "I/O-Stream Basics](#io_stream_basics) in the appendix.
+]
+
+---
+template: plain
+header: #### A Poor Man's Approach to TDD
+
+Consider the following fragment that request a name as input and sends a greet
+of which this name is a part:
+```
+void say_hello()
+    string name;
+    cin >> name;
+    cout << "hello, " << name << endl;
+}
+```
+The first change required is to use function arguments instead of global stream
+objects:._[]
+```
+void say_hello(istream& in, ostream& out)
+    string name
+    in >> name;
+    out << "hello, " << name << endl;
+}
+```
+.F[:
+Arguments of `say_hello` might actually be named `cin` and `cout` and therefore
+shadow the global objects, but this is not recommended as it could quickly lead
+to misunderstandings.
+]
+
+---
+template: plain
+header: #### A Poor Man's Approach to TDD (2)
+
+Now some input can be prepared by using the
+
+* `std::istringstream prepared_input`
+
+while the output is received in the
+
+* `std::ostringstream received_output`
+
+and compared to the expectation:._[]
+```
+int main() {
+    istringstream prepared_input("Mary");
+    ostringstream received_output;
+    // -------------------------------------------
+       say_hello(prepared_input, received output);
+    // -------------------------------------------
+    assert(received_output.str() == "hello, Mary\n");
+    cout << "** TEST PASSED **" << endl;
+}
+```
+.F[:
+Of course, a serious automated test should make sure that the answer is not
+always `hello, Mary\n`, no matter what the input was … :-)
+]
+
+---
+template: plain
 name: template_intro
 header: ## Template Introduction
 
@@ -3059,8 +3318,8 @@ class NonThrowingPolicy {
 ```
 Throwing and non-throwing versions of class `Mine`:
 ```
-typedef Mine<ThrowingPolicy> ThrowingMine;
-typedef Mine<NonThrowingPolicy> NonThrowingMine;
+using ThrowingMine = Mine<ThrowingPolicy>;
+using NonThrowingMine = Mine<NonThrowingPolicy>;
 ```
 .N[
 The advantage here is that especially in the non-throwing variant the empty
@@ -3129,129 +3388,14 @@ template<typename T> struct call_traits<T*> { typedef T param_type; }
 
 ---
 template: plain
-name: library_overview
-header: ## Standard Library Overview
+name: stdlib_stl
+header: ## STL (Containers and Algorithms)
 
-Frequently useful library components are:
+Useful library components for common data structures and algorithms
+are:
 
-* [The class `std::string`](#std_string)
-* [Classes for Stream Handling](#std_iostream)
 * [Container Classes from the STL](#stl_containers)
 * [Algorithms from the STL](#stl_algorithms)
-
----
-template: plain
-name: std_string
-header: ### Standard String Class
-
-[`std::string`]: http://de.cppreference.com/w/cpp/string/basic_string
-
-The [`std::string`] is designed to be used much like a built-in type.
-
-The following program fragment prints the largest word from its input (in
-lexicographical sort order):
-```
-string word;
-string maxword:
-while (cin >> word) {
-    if (maxword < word) maxword = word;
-}
-cout << maxword << endl;
-```
-
-.N[
-As the class `std::string` is not covered in much detail here feel free to
-ask for more information based on the
-[Infographic "Standard Strings"](#std_string_basics) in the appendix.
-]
-
----
-template: plain
-name: std_iostream
-header: ### Classes for Stream Handling
-
-Support for handling data streams – mainly dealing with the aspects of
-abstraction and transparent buffering – falls into two big groups:
-
-* [`std::istream`] and [`std::ostream`] hosting all the input and output
-  operations while decoupling the actual data source or sink.
-
-* [`std::ifstream`] and [`std::ofstream`] using a classical (external) file
-  as data source or sink.
-
-* [`std::istringstream`] and [`std::ostringstream`] using an [`std::string`] as
-  data source or sink.
-
-[`std::string`]: http://de.cppreference.com/w/cpp/string/basic_string
-[`std::istream`]: http://en.cppreference.com/w/cpp/io/basic_istream
-[`std::ostream`]: http://en.cppreference.com/w/cpp/io/basic_ostream
-[`std::ifstream`]: http://en.cppreference.com/w/cpp/io/basic_ifstream
-[`std::ofstream`]: http://en.cppreference.com/w/cpp/io/basic_ofstream
-[`std::istringstream`]: http://en.cppreference.com/w/cpp/io/basic_istringstream
-[`std::ostringstream`]: http://en.cppreference.com/w/cpp/io/basic_ostringstream
-
-.N.center[
-As the above classes are not covered in much detail here  
-feel free to ask for more information based on  
-the [Infographic "I/O-Stream Basics](#io_stream_basics) in the appendix.
-]
-
----
-template: plain
-header: #### A Poor Man's Approach to TDD
-
-Consider the following fragment that request a name as input and sends a greet
-of which this name is a part:
-```
-void say_hello()
-    string name;
-    cin >> name;
-    cout << "hello, " << name << endl;
-}
-```
-The first change required is to use function arguments instead of global stream
-objects:._[]
-```
-void say_hello(istream& in, ostream& out)
-    string name
-    in >> name;
-    out << "hello, " << name << endl;
-}
-```
-.F[:
-Arguments of `say_hello` might actually be named `cin` and `cout` and therefore
-shadow the global objects, but this is not recommended as it could quickly lead
-to misunderstandings.
-]
-
----
-template: plain
-header: #### A Poor Man's Approach to TDD (2)
-
-Now some input can be prepared by using the
-
-* `std::istringstream prepared_input`
-
-while the output is received in the
-
-* `std::ostringstream received_output`
-
-and compared to the expectation:._[]
-```
-int main() {
-    istringstream prepared_input("Mary");
-    ostringstream received_output;
-    // -------------------------------------------
-       say_hello(prepared_input, received output);
-    // -------------------------------------------
-    assert(received_output.str() == "hello, Mary\n");
-    cout << "** TEST PASSED **" << endl;
-}
-```
-.F[:
-Of course, a serious automated test should make sure that the answer is not
-always `hello, Mary\n`, no matter what the input was … :-)
-]
 
 ---
 template: plain
@@ -3277,7 +3421,7 @@ template: plain
 name: sequential_containers
 header: #### Sequential Containers
 
-C++98 defined the [following three](#stl_sequence_cont):
+The following five containers store their elements as sequence:._[]
 
 * [`std::vector`] – contiguously stored objects (like in an native array) with
   providing random access and insertion/removal **at one end** with O(1)
@@ -3292,13 +3436,15 @@ C++98 defined the [following three](#stl_sequence_cont):
   combining random access and insertion/deletion at **both ends** (but not in
   the middle.
 
-C++11 [added the following](#stl_sequence_cont):
-
 * [`std::array`] – light-weight wrapper providing sequential container
   for native arrays.
 
 * [`std::forward_list`] – non-contiguously stored objects with one link per
   element, providing less overhead for small payload per element.
+
+.F[:
+The last two have been added with C++11.
+]
 
 
 [`std::vector`]: http://en.cppreference.com/w/cpp/container/vector
@@ -3312,8 +3458,7 @@ template: plain
 name: associative_containers
 header: #### Associative Containers
 
-C++ 98 defined the [following four](#stl_associative_cont) (all contained
-elements stored in a balanced binary tree):
+The following containers store their elements as a binary tree for quick look-up:
 
 * [`std::set`] – "key"-only container without duplicates, providing look-up
   with O(log(N)) performance;
@@ -3325,8 +3470,8 @@ elements stored in a balanced binary tree):
   look-up with O(log(N)) performance;
 * [`std::multimap`] – as before but allowing duplicates.
 
-C++11 added the [following four](#stl_associative_cont) (all contained elements
-stored in a hash-based bucket-chain structure):
+The following containers store their elements a hash-based bucket-chain
+structure:
 
 * [`std::unordered_set`] – "key"-only container without duplicates, providing
   element-lookup with O(1) performance;
@@ -4076,8 +4221,8 @@ So that the problem manifests itself there must of course be a call like this:
 
 ---
 template: plain
-name: cpp11_library_extensions
-header: ## Library Extensions since C++11
+name: more_library_components
+header: ## More Library Components
 
 This section summarizes some important extensions of the C++ standard
 library introduced with C++11, C++14, and C++17.
